@@ -27,7 +27,7 @@ namespace MyProject.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Privacy() // TODO: Add Privacy tab to Index.cshtml
         {
             return View();
         }
