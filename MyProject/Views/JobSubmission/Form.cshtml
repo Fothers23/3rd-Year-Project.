@@ -5,15 +5,15 @@
     ViewData["Title"] = "Form";
 }
 
-<head>
-    <title>Job Submission Form</title>
-</head>
+<div>
+    <h2>Job Submission Form</h2>
+</div>
 <body>
     @using (Html.BeginForm())
     {
         @Html.ValidationSummary(true)
         @Html.EditorForModel()
-        <button type="submit">Submit</button>
+        <button type="submit">Submit</button>        
     }
 </body>
 
