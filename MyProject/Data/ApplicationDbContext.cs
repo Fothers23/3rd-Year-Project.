@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MyProject.Models;
 
 namespace MyProject.Data
 {
@@ -12,5 +13,9 @@ namespace MyProject.Data
             : base(options)
         {
         }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<JobSubmissionModel> JobSubmissions { get; set; }
+
     }
 }
