@@ -8,7 +8,7 @@ namespace MyProject.Controllers
 {
     public class JobSubmissionController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Form()
         {
             return View();
         }
