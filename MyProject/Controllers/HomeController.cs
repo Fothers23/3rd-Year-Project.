@@ -1,16 +1,45 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyProject.Data;
 using MyProject.Models;
 
 namespace MyProject.Controllers
 {
     public class HomeController : Controller
     {
+        //private ApplicationDbContext db;
+
+        //[HttpGet]
         public IActionResult Index()
         {
             return View();
         }
+
+        //[HttpPost]
+        //public IActionResult Index(JobSubmissionModel submittedJob)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.JobSubmissions.Add(submittedJob);
+        //        db.SaveChanges();
+
+        //        return View(submittedJob);
+        //    }
+        //    return View();
+        //}
+
+        //[HttpGet]
+        //public IActionResult JobList()
+        //{
+        //    AvailableJobViewModel availableJobViewModel = new AvailableJobViewModel();
+
+        //    availableJobViewModel.Jobs = db.JobSubmissions.ToList<JobSubmissionModel>();
+        //    availableJobViewModel.NumberOfJobs = availableJobViewModel.Jobs.Count;
+
+        //    return View(availableJobViewModel);
+        //}
 
         [Authorize]
         public IActionResult About()
