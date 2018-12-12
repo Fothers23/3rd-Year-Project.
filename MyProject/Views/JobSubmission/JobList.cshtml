@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "JobList";
+}
+
+<h2>Available Jobs</h2>
+<body>
+    <ul>
+        @foreach (MyProject.Models.JobSubmissionModel jobSubmission in Model.Jobs)
+        {
+            <li>@jobSubmission.Title @jobSubmission.Developer @jobSubmission.Genre</li>
+        }
+    </ul>
+    <a asp-action="Form">Submit New Job</a>
+</body>
