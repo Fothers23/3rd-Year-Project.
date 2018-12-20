@@ -189,10 +189,11 @@ namespace MyProject.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MyProject.Models.JobSubmissionModel", b =>
+            modelBuilder.Entity("MyProject.Models.Game", b =>
                 {
-                    b.Property<string>("Title")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("GId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AgeRating")
                         .HasMaxLength(3);
@@ -200,18 +201,23 @@ namespace MyProject.Data.Migrations
                     b.Property<string>("AvailablePlatforms");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(200);
+                        .HasMaxLength(150);
 
                     b.Property<string>("Developer")
-                        .HasMaxLength(50);
+                        .HasMaxLength(60);
 
-                    b.Property<string>("Genre");
+                    b.Property<string>("Genre")
+                        .HasMaxLength(60);
 
                     b.Property<int>("NumberOfPlayers");
 
-                    b.HasKey("Title");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(60);
 
-                    b.ToTable("JobSubmissions");
+                    b.HasKey("GId");
+
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("MyProject.Models.ApplicationUser", b =>

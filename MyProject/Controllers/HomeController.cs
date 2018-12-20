@@ -9,9 +9,26 @@ namespace MyProject.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db;
+
+        public HomeController(ApplicationDbContext _db) => db = _db;
+
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            return View("IndexWithForm");
+        }
+
+        [HttpPost]
+        public IActionResult Index(Game game)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Games.Add(game);
+                db.SaveChanges();
+                return RedirectToAction("GameList");
+            }
+            return View("IndexWithForm");
         }
 
         [Authorize]

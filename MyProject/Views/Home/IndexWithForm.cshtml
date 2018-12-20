@@ -1,0 +1,17 @@
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model MyProject.Models.Game
+
+@{
+    ViewData["Title"] = "IndexWithForm";
+}
+
+<h2>Submit a Game for Review</h2>
+<body>
+    <div asp-validation-summary="All"></div>
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        @Html.EditorForModel()
+        <button type="submit">Submit</button>
+    }
+</body>

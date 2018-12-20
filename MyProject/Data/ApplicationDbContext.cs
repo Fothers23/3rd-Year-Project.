@@ -15,7 +15,7 @@ namespace MyProject.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<JobSubmissionModel> Jobs { get; set; }
+        public DbSet<Game> Games { get; set; }
 
     }
 }
