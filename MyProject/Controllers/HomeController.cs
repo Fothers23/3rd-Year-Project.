@@ -31,6 +31,17 @@ namespace MyProject.Controllers
             return View("IndexWithForm");
         }
 
+        [HttpGet]
+        public IActionResult GameList()
+        {
+            GameList gameList = new GameList();
+
+            gameList.Games = db.Games.ToList<Game>();
+            gameList.NumberOfGames = gameList.Games.Count;
+
+            return View(gameList);
+        }
+
         [Authorize]
         public IActionResult About()
         {

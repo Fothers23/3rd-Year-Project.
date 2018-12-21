@@ -1,9 +1,23 @@
-﻿
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model MyProject.Models.GameList
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<h3>Available Jobs</h3>
+<h2>Available Games for Review</h2>
+<body>
+    There are a total of @Model.NumberOfGames games available to review.
+
+    <ul>
+        @foreach (MyProject.Models.Game game in Model.Games)
+        {
+            <li>@game.Title - @game.Description | @game.Developer **@game.ReviewReward** </li>
+        }
+    </ul>
+
+    <a asp-action="Index">Submit new Game</a>
+
+</body>
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
