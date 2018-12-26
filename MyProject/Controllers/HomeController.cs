@@ -42,6 +42,12 @@ namespace MyProject.Controllers
             return View(gameList);
         }
 
+        [HttpGet]
+        public IActionResult Review()
+        {
+            return View("ReviewForm");
+        }
+
         [Authorize]
         public IActionResult About()
         {

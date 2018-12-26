@@ -11,7 +11,7 @@
     <ul>
         @foreach (MyProject.Models.Game game in Model.Games)
         {
-            <li>@game.Title - @game.Description | @game.Developer **@game.ReviewReward** </li>
+            <li><a asp-action="Review">@game.Title - @game.Description | @game.Developer **@game.ReviewReward**</a></li>
         }
     </ul>
 
