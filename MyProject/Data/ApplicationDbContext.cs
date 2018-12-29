@@ -16,6 +16,7 @@ namespace MyProject.Data
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Game> Games { get; set; }
+        //public DbSet<Review> Reviews { get; set; }
 
     }
 }
