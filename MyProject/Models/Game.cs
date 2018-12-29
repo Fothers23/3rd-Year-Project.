@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MyProject.Models
 {
@@ -20,18 +16,23 @@ namespace MyProject.Models
         [MinLength(2), MaxLength(150)]
         public string Description { get; set; }
 
+        [Display(Name = "Age Rating")]
         [MinLength(1), MaxLength(3)]
         public string AgeRating { get; set; }
 
         [MinLength(2), MaxLength(60)]
         public string Genre { get; set; }
 
+        [Display(Name = "Number of Players")]
         public int NumberOfPlayers { get; set; }
 
+        [Display(Name = "Available Platforms")]
         public string AvailablePlatforms { get; set; }
 
+        [Display(Name = "Number of reviews required")]
         public int ReviewQuantity { get; set; }
 
+        [Display(Name = "Reward for review")]
         public string ReviewReward { get; set; }
     }
 }
