@@ -1,0 +1,70 @@
+﻿@model MyProject.Models.Game
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Game</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Developer" class="control-label"></label>
+                <input asp-for="Developer" class="form-control" />
+                <span asp-validation-for="Developer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AgeRating" class="control-label"></label>
+                <input asp-for="AgeRating" class="form-control" />
+                <span asp-validation-for="AgeRating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Genre" class="control-label"></label>
+                <input asp-for="Genre" class="form-control" />
+                <span asp-validation-for="Genre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfPlayers" class="control-label"></label>
+                <input asp-for="NumberOfPlayers" class="form-control" />
+                <span asp-validation-for="NumberOfPlayers" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AvailablePlatforms" class="control-label"></label>
+                <input asp-for="AvailablePlatforms" class="form-control" />
+                <span asp-validation-for="AvailablePlatforms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewQuantity" class="control-label"></label>
+                <input asp-for="ReviewQuantity" class="form-control" />
+                <span asp-validation-for="ReviewQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewReward" class="control-label"></label>
+                <input asp-for="ReviewReward" class="form-control" />
+                <span asp-validation-for="ReviewReward" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

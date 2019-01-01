@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyProject.Data;
@@ -16,36 +15,7 @@ namespace MyProject.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View("IndexWithForm");
-        }
-
-        [HttpPost]
-        public IActionResult Index(Game game)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Games.Add(game);
-                db.SaveChanges();
-                return RedirectToAction("GameList");
-            }
-            return View("IndexWithForm");
-        }
-
-        [HttpGet]
-        public IActionResult GameList()
-        {
-            GameList gameList = new GameList();
-
-            gameList.Games = db.Games.ToList<Game>();
-            gameList.NumberOfGames = gameList.Games.Count;
-
-            return View(gameList);
-        }
-
-        [HttpGet]
-        public IActionResult Review()
-        {
-            return View("ReviewForm");
+            return View();
         }
 
         [Authorize]

@@ -29,7 +29,7 @@ namespace MyProject.Models
         [Display(Name = "Available Platforms")]
         public string AvailablePlatforms { get; set; }
 
-        [Display(Name = "Number of reviews required")]
+        [Display(Name = "Reviews Required")]
         public int ReviewQuantity { get; set; }
 
         [Display(Name = "Reward for review")]
