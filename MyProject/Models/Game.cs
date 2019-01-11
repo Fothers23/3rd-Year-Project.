@@ -1,26 +1,32 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyProject.Models
 {
     public class Game
     {
         [Key, ScaffoldColumn(false)]
-        public int GId { get; set; }
+        public int GameID { get; set; }
 
-        [Required, MinLength(2), MaxLength(60)]
+        [Required, StringLength(60)]
         public string Title { get; set; }
 
-        [MinLength(2), MaxLength(60)]
+        [StringLength(60)]
         public string Developer { get; set; }
 
-        [MinLength(2), MaxLength(150)]
+        [StringLength(250)]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
+        [Url]
+        [Display(Name = "Game Link")]
+        public string GameLink { get; set; }
+
         [Display(Name = "Age Rating")]
-        [MinLength(1), MaxLength(3)]
+        [StringLength(3)]
         public string AgeRating { get; set; }
 
-        [MinLength(2), MaxLength(60)]
+        [StringLength(60)]
         public string Genre { get; set; }
 
         [Display(Name = "Number of Players")]
@@ -34,5 +40,15 @@ namespace MyProject.Models
 
         [Display(Name = "Reward for review")]
         public string ReviewReward { get; set; }
+
+        [Display(Name = "Date Posted")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime DatePosted { get; set; }
+
+        // This constructor sets the current time when the Game is posted.
+        public Game()
+        {
+            DatePosted = DateTime.Now;
+        }
     }
 }

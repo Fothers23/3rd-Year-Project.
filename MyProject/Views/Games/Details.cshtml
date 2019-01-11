@@ -29,6 +29,12 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.GameLink)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GameLink)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.AgeRating)
         </dt>
         <dd>
@@ -64,9 +70,15 @@
         <dd>
             @Html.DisplayFor(model => model.ReviewReward)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DatePosted)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DatePosted)
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.GId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.GameID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

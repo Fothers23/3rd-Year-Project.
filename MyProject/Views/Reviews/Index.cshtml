@@ -39,6 +39,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Summary)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePosted)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -73,9 +76,12 @@
                 @Html.DisplayFor(modelItem => item.Summary)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.RId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RId">Delete</a>
+                @Html.DisplayFor(modelItem => item.DatePosted)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ReviewID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ReviewID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ReviewID">Delete</a>
             </td>
         </tr>
 }

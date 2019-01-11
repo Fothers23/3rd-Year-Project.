@@ -34,7 +34,7 @@ namespace MyProject.Controllers
             }
 
             var game = await _context.Games
-                .FirstOrDefaultAsync(m => m.GId == id);
+                .FirstOrDefaultAsync(m => m.GameID == id);
             if (game == null)
             {
                 return NotFound();
@@ -54,7 +54,8 @@ namespace MyProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Developer,Description,AgeRating,Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward")] Game game)
+        public async Task<IActionResult> Create([Bind("Title,Developer,Description,GameLink,AgeRating" +
+            ",Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward,DatePosted")] Game game)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +87,10 @@ namespace MyProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GId,Title,Developer,Description,AgeRating,Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward")] Game game)
+        public async Task<IActionResult> Edit(int id, [Bind("GameID,Title,Developer,Description,GameLink," +
+            "AgeRating,Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward")] Game game)
         {
-            if (id != game.GId)
+            if (id != game.GameID)
             {
                 return NotFound();
             }
@@ -102,7 +104,7 @@ namespace MyProject.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GameExists(game.GId))
+                    if (!GameExists(game.GameID))
                     {
                         return NotFound();
                     }
@@ -125,7 +127,7 @@ namespace MyProject.Controllers
             }
 
             var game = await _context.Games
-                .FirstOrDefaultAsync(m => m.GId == id);
+                .FirstOrDefaultAsync(m => m.GameID == id);
             if (game == null)
             {
                 return NotFound();
@@ -147,7 +149,7 @@ namespace MyProject.Controllers
 
         private bool GameExists(int id)
         {
-            return _context.Games.Any(e => e.GId == id);
+            return _context.Games.Any(e => e.GameID == id);
         }
     }
 }

@@ -19,11 +19,9 @@
                 @Html.DisplayNameFor(model => model.Developer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.ReviewReward)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -36,15 +34,13 @@
                 @Html.DisplayFor(modelItem => item.Developer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.ReviewReward)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.GId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.GId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.GId">Delete</a>
+                <a asp-controller="Reviews" asp-action="Create">Review</a> |
+                <a asp-action="Edit" asp-route-id="@item.GameID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.GameID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.GameID">Delete</a>
             </td>
         </tr>
 }

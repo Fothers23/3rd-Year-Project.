@@ -22,7 +22,7 @@ namespace MyProject.Controllers
         // GET: Reviews
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Review.ToListAsync());
+            return View(await _context.Reviews.ToListAsync());
         }
 
         // GET: Reviews/Details/5
@@ -33,8 +33,8 @@ namespace MyProject.Controllers
                 return NotFound();
             }
 
-            var review = await _context.Review
-                .FirstOrDefaultAsync(m => m.RId == id);
+            var review = await _context.Reviews
+                .FirstOrDefaultAsync(m => m.ReviewID == id);
             if (review == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace MyProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GraphicQuality,Playability,StoryCharacterDevelopment,GameplayControls,Multiplayer,Pros,Cons,WrittenReview,Summary")] Review review)
+        public async Task<IActionResult> Create([Bind("GraphicQuality,Playability,StoryCharacterDevelopment,GameplayControls,Multiplayer,Pros,Cons,WrittenReview,Summary,DatePosted")] Review review)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace MyProject.Controllers
                 return NotFound();
             }
 
-            var review = await _context.Review.FindAsync(id);
+            var review = await _context.Reviews.FindAsync(id);
             if (review == null)
             {
                 return NotFound();
@@ -86,9 +86,9 @@ namespace MyProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GraphicQuality,Playability,StoryCharacterDevelopment,GameplayControls,Multiplayer,Pros,Cons,WrittenReview,Summary")] Review review)
+        public async Task<IActionResult> Edit(int id, [Bind("GraphicQuality,Playability,StoryCharacterDevelopment,GameplayControls,Multiplayer,Pros,Cons,WrittenReview,Summary,DatePosted")] Review review)
         {
-            if (id != review.RId)
+            if (id != review.ReviewID)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace MyProject.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReviewExists(review.RId))
+                    if (!ReviewExists(review.ReviewID))
                     {
                         return NotFound();
                     }
@@ -124,8 +124,8 @@ namespace MyProject.Controllers
                 return NotFound();
             }
 
-            var review = await _context.Review
-                .FirstOrDefaultAsync(m => m.RId == id);
+            var review = await _context.Reviews
+                .FirstOrDefaultAsync(m => m.ReviewID == id);
             if (review == null)
             {
                 return NotFound();
@@ -139,15 +139,15 @@ namespace MyProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var review = await _context.Review.FindAsync(id);
-            _context.Review.Remove(review);
+            var review = await _context.Reviews.FindAsync(id);
+            _context.Reviews.Remove(review);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ReviewExists(int id)
         {
-            return _context.Review.Any(e => e.RId == id);
+            return _context.Reviews.Any(e => e.ReviewID == id);
         }
     }
 }

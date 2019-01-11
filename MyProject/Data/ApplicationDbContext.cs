@@ -14,10 +14,15 @@ namespace MyProject.Data
         {
         }
 
+        // This allows the Games and Reviews to link correctly.
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Game> Games { get; set; }
-        public DbSet<MyProject.Models.Review> Review { get; set; }
-        //public DbSet<Review> Reviews { get; set; }
+        public DbSet<Review> Reviews { get; set; }
 
     }
 }
