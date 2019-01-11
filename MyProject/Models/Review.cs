@@ -10,18 +10,21 @@ namespace MyProject.Models
         public int ReviewID { get; set; }
 
         [Display(Name = "Graphic Quality")]
-        public int GraphicQuality { get; set; }
+        public double GraphicQuality { get; set; }
 
-        public int Playability { get; set; }
+        public double Playability { get; set; }
 
         [Display(Name = "Story/Character Development")]
-        public int StoryCharacterDevelopment { get; set; }
+        public double StoryCharacterDevelopment { get; set; }
 
         [Display(Name = "Gameplay & Controls")]
-        public int GameplayControls { get; set; }
+        public double GameplayControls { get; set; }
 
         [Display(Name = "Co-op/Online Multiplayer")]
-        public int Multiplayer { get; set; }
+        public double Multiplayer { get; set; }
+
+        [Display(Name = "Overall Rating")]
+        public double OverallRating { get; set; }
 
         public string Pros { get; set; }
 
@@ -43,6 +46,8 @@ namespace MyProject.Models
         public Review()
         {
             DatePosted = DateTime.Now;
+            OverallRating = (GraphicQuality + Playability + StoryCharacterDevelopment + GameplayControls
+                + Multiplayer) / 5.0;
         }
 
         public virtual Game MyGame { get; set; }

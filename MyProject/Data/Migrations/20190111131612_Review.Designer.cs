@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyProject.Data;
 
 namespace MyProject.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190111131612_Review")]
+    partial class Review
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,21 +240,21 @@ namespace MyProject.Data.Migrations
 
                     b.Property<DateTime>("DatePosted");
 
-                    b.Property<double>("GameplayControls");
+                    b.Property<int>("GameplayControls");
 
-                    b.Property<double>("GraphicQuality");
+                    b.Property<int>("GraphicQuality");
 
-                    b.Property<double>("Multiplayer");
+                    b.Property<int>("Multiplayer");
 
                     b.Property<int?>("MyGameGameID");
 
-                    b.Property<double>("OverallRating");
+                    b.Property<int>("OverallRating");
 
-                    b.Property<double>("Playability");
+                    b.Property<int>("Playability");
 
                     b.Property<string>("Pros");
 
-                    b.Property<double>("StoryCharacterDevelopment");
+                    b.Property<int>("StoryCharacterDevelopment");
 
                     b.Property<string>("Summary")
                         .HasMaxLength(200);

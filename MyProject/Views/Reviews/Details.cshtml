@@ -5,11 +5,82 @@
 }
 
 <h2>Details</h2>
-
+<div>
+    <h4>@Html.DisplayFor(model => model.MyGame.Title)</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MyGame.Developer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MyGame.Developer)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MyGame.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MyGame.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MyGame.GameLink)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MyGame.GameLink)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MyGame.AgeRating)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MyGame.AgeRating)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MyGame.Genre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MyGame.Genre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MyGame.NumberOfPlayers)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MyGame.NumberOfPlayers)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MyGame.AvailablePlatforms)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MyGame.AvailablePlatforms)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MyGame.ReviewQuantity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MyGame.ReviewQuantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MyGame.ReviewReward)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MyGame.ReviewReward)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MyGame.DatePosted)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MyGame.DatePosted)
+        </dd>
+    </dl>
+    <hr />
+</div>
 <div>
     <h4>Review</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OverallRating)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OverallRating)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.GraphicQuality)
         </dt>

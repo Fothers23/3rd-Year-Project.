@@ -13,19 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.GraphicQuality)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Playability)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StoryCharacterDevelopment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GameplayControls)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Multiplayer)
+                @Html.DisplayNameFor(model => model.OverallRating)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Pros)
@@ -49,19 +37,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.GraphicQuality)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Playability)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StoryCharacterDevelopment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GameplayControls)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Multiplayer)
+                @Html.DisplayFor(modelItem => item.OverallRating)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Pros)
