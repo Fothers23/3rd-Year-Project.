@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyProject.Data;
 using MyProject.Models;
@@ -33,14 +31,64 @@ namespace MyProject.Controllers
                 return NotFound();
             }
 
-            var game = await _context.Games
-                .FirstOrDefaultAsync(m => m.GameID == id);
+            Game game = await _context.Games
+                .SingleOrDefaultAsync(m => m.GameID == id);
             if (game == null)
             {
                 return NotFound();
             }
+            GameDetailsViewModel viewModel = await GetViewModelFromGame(game);
 
-            return View(game);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details([Bind("GameID,GraphicQuality,Playability," +
+            "StoryCharacterDevelopment,GameplayControls,Multiplayer,OverallRating,Pros" +
+            "Cons,WrittenReview,Summary")] GameDetailsViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Review review = new Review();
+                review.GraphicQuality = viewModel.GraphicQuality;
+                review.Playability = viewModel.Playability;
+                review.StoryCharacterDevelopment = viewModel.StoryCharacterDevelopment;
+                review.GameplayControls = review.GameplayControls;
+                review.Multiplayer = viewModel.Multiplayer;
+                review.Pros = viewModel.Pros;
+                review.Cons = viewModel.Cons;
+                review.WrittenReview = review.WrittenReview;
+                review.Summary = viewModel.Summary;
+
+                Game game = await _context.Games
+                    .SingleOrDefaultAsync(m => m.GameID == viewModel.GameID);
+
+                if (game == null)
+                {
+                    return NotFound();
+                }
+
+                review.MyGame = game;
+                _context.Reviews.Add(review);
+                await _context.SaveChangesAsync();
+
+                viewModel = await GetViewModelFromGame(game);
+            }
+            return View(viewModel);
+        }
+
+        private async Task<GameDetailsViewModel> GetViewModelFromGame(Game game)
+        {
+            GameDetailsViewModel viewModel = new GameDetailsViewModel();
+
+            viewModel.Game = game;
+
+            List<Review> reviews = await _context.Reviews
+                .Where(x => x.MyGame == game).ToListAsync();
+
+            viewModel.Reviews = reviews;
+            return viewModel;
         }
 
         // GET: Games/Create

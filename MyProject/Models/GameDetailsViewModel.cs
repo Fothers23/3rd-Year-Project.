@@ -1,25 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyProject.Models
 {
-    public class Review
+    public class GameDetailsViewModel
     {
-        [Key]
-        [ScaffoldColumn(false)]
+        public Game Game { get; set; }
+
+        public List<Review> Reviews { get; set; }
+
         public int ReviewID { get; set; }
-        
+
+        public int GameID { get; set; }
+
         [Display(Name = "Graphic Quality")]
         public double GraphicQuality { get; set; }
-        
+
         public double Playability { get; set; }
-        
+
         [Display(Name = "Story/Character Development")]
         public double StoryCharacterDevelopment { get; set; }
-        
+
         [Display(Name = "Gameplay & Controls")]
         public double GameplayControls { get; set; }
-        
+
         [Display(Name = "Co-op/Online Multiplayer")]
         public double Multiplayer { get; set; }
 
@@ -31,25 +36,11 @@ namespace MyProject.Models
         public string Cons { get; set; }
 
         [Display(Name = "Written Review")]
-        [DataType(DataType.MultilineText)]
         public string WrittenReview { get; set; }
 
-        [StringLength(200)]
-        [DataType(DataType.MultilineText)]
         public string Summary { get; set; }
 
         [Display(Name = "Date Posted")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DatePosted { get; set; }
-
-        // This constructor sets the current time when the review is posted.
-        public Review()
-        {
-            DatePosted = DateTime.Now;
-            OverallRating = (GraphicQuality + Playability + StoryCharacterDevelopment + GameplayControls
-                + Multiplayer) / 5.0;
-        }
-
-        public virtual Game MyGame { get; set; }
     }
 }

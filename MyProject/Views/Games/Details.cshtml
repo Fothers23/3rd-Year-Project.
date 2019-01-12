@@ -1,4 +1,4 @@
-﻿@model MyProject.Models.Game
+﻿@model MyProject.Models.GameDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -7,78 +7,178 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Game</h4>
+    <h4>@Html.DisplayFor(model => model.Game.Title)</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Game.Developer)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.Game.Developer)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Developer)
+            @Html.DisplayNameFor(model => model.Game.Description)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Developer)
+            @Html.DisplayFor(model => model.Game.Description)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Game.GameLink)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Game.GameLink)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.GameLink)
+            @Html.DisplayNameFor(model => model.Game.AgeRating)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.GameLink)
+            @Html.DisplayFor(model => model.Game.AgeRating)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.AgeRating)
+            @Html.DisplayNameFor(model => model.Game.Genre)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AgeRating)
+            @Html.DisplayFor(model => model.Game.Genre)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Genre)
+            @Html.DisplayNameFor(model => model.Game.NumberOfPlayers)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Genre)
+            @Html.DisplayFor(model => model.Game.NumberOfPlayers)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.NumberOfPlayers)
+            @Html.DisplayNameFor(model => model.Game.AvailablePlatforms)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.NumberOfPlayers)
+            @Html.DisplayFor(model => model.Game.AvailablePlatforms)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.AvailablePlatforms)
+            @Html.DisplayNameFor(model => model.Game.ReviewReward)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.AvailablePlatforms)
+            @Html.DisplayFor(model => model.Game.ReviewReward)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ReviewQuantity)
+            @Html.DisplayNameFor(model => model.Game.DatePosted)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ReviewQuantity)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ReviewReward)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ReviewReward)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DatePosted)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DatePosted)
+            @Html.DisplayFor(model => model.Game.DatePosted)
         </dd>
     </dl>
 </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OverallRating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pros)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cons)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WrittenReview)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Summary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePosted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Review item in Model.Reviews)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OverallRating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pros)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cons)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WrittenReview)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Summary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePosted)
+                </td>
+                <td>
+                    <a asp-action="EditReview" asp-route-id="@item.ReviewID">Edit</a> |
+                    <a asp-action="DeleteReview" asp-route-id="@item.ReviewID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<hr />
+<h4>Review @Html.DisplayFor(model => model.Game.Title)</h4>
+<div class="row">
+    <div class="col-md-4">
+        @Html.AntiForgeryToken()
+        <form asp-action="Details">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="GameID" value="@Model.Game.GameID" />
+            <div class="form-group">
+                <label asp-for="GraphicQuality" class="control-label"></label>
+                <input asp-for="GraphicQuality" class="form-control" />
+                <span asp-validation-for="GraphicQuality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Playability" class="control-label"></label>
+                <input asp-for="Playability" class="form-control" />
+                <span asp-validation-for="Playability" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StoryCharacterDevelopment" class="control-label"></label>
+                <input asp-for="StoryCharacterDevelopment" class="form-control" />
+                <span asp-validation-for="StoryCharacterDevelopment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GameplayControls" class="control-label"></label>
+                <input asp-for="GameplayControls" class="form-control" />
+                <span asp-validation-for="GameplayControls" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Multiplayer" class="control-label"></label>
+                <input asp-for="Multiplayer" class="form-control" />
+                <span asp-validation-for="Multiplayer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pros" class="control-label"></label>
+                <input asp-for="Pros" class="form-control" />
+                <span asp-validation-for="Pros" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cons" class="control-label"></label>
+                <input asp-for="Cons" class="form-control" />
+                <span asp-validation-for="Cons" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WrittenReview" class="control-label"></label>
+                <textarea asp-for="WrittenReview" class="form-control"></textarea>
+                <span asp-validation-for="WrittenReview" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Summary" class="control-label"></label>
+                <textarea asp-for="Summary" class="form-control"></textarea>
+                <span asp-validation-for="Summary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit Review" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.GameID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
