@@ -18,7 +18,6 @@ namespace MyProject.Controllers
             return View();
         }
 
-        [Authorize]
         public IActionResult About()
         {
             ViewData["Message"] = "My third year project.";
