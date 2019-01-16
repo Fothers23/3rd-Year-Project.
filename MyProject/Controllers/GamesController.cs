@@ -45,8 +45,8 @@ namespace MyProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Details([Bind("GameID,GraphicQuality,Playability," +
-            "StoryCharacterDevelopment,GameplayControls,Multiplayer,OverallRating,Pros" +
-            "Cons,WrittenReview,Summary")] GameDetailsViewModel viewModel)
+            "StoryCharacterDevelopment,GameplayControls,Multiplayer,Pros,Cons,WrittenReview," +
+            "Summary")] GameDetailsViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -54,11 +54,11 @@ namespace MyProject.Controllers
                 review.GraphicQuality = viewModel.GraphicQuality;
                 review.Playability = viewModel.Playability;
                 review.StoryCharacterDevelopment = viewModel.StoryCharacterDevelopment;
-                review.GameplayControls = review.GameplayControls;
+                review.GameplayControls = viewModel.GameplayControls;
                 review.Multiplayer = viewModel.Multiplayer;
                 review.Pros = viewModel.Pros;
                 review.Cons = viewModel.Cons;
-                review.WrittenReview = review.WrittenReview;
+                review.WrittenReview = viewModel.WrittenReview;
                 review.Summary = viewModel.Summary;
 
                 Game game = await _context.Games
