@@ -202,5 +202,32 @@ namespace MyProject.Controllers
         {
             return _context.Games.Any(e => e.GameID == id);
         }
+
+        public async Task<IActionResult> DeleteReview(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var review = await _context.Reviews
+                .FirstOrDefaultAsync(m => m.ReviewID == id);
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            return View(review);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteReview(int id)
+        {
+            var review = await _context.Reviews.FindAsync(id);
+            _context.Reviews.Remove(review);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
