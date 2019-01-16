@@ -56,6 +56,9 @@ namespace MyProject.Controllers
                 review.StoryCharacterDevelopment = viewModel.StoryCharacterDevelopment;
                 review.GameplayControls = viewModel.GameplayControls;
                 review.Multiplayer = viewModel.Multiplayer;
+                review.OverallRating = (viewModel.GraphicQuality + viewModel.Playability
+                    + viewModel.StoryCharacterDevelopment + viewModel.GameplayControls
+                    + viewModel.Multiplayer) / 5.0;
                 review.Pros = viewModel.Pros;
                 review.Cons = viewModel.Cons;
                 review.WrittenReview = viewModel.WrittenReview;

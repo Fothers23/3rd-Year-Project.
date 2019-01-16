@@ -46,8 +46,6 @@ namespace MyProject.Models
         public Review()
         {
             DatePosted = DateTime.Now;
-            OverallRating = (GraphicQuality + Playability + StoryCharacterDevelopment + GameplayControls
-                + Multiplayer) / 5.0;
         }
 
         public virtual Game MyGame { get; set; }
