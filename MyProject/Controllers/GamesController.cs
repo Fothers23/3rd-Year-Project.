@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyProject.Data;
@@ -8,6 +9,7 @@ using MyProject.Models;
 
 namespace MyProject.Controllers
 {
+    [Authorize]
     public class GamesController : Controller
     {
         private readonly ApplicationDbContext _context;

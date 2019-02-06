@@ -20,7 +20,7 @@ namespace MyProject.Data
             base.OnModelCreating(builder);
         }
 
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Requester> Requesters { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Review> Reviews { get; set; }
 
