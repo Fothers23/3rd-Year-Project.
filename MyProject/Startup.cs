@@ -8,6 +8,7 @@ using MyProject.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using MyProject.Models;
 
 namespace MyProject
 {
@@ -56,8 +57,11 @@ namespace MyProject
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();           
+            services.AddIdentity<ApplicationUser, ApplicationRole>(
+                options => options.Stores.MaxLengthForKeys = 128)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders(); ;           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

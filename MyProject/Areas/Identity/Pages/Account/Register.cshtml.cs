@@ -15,19 +15,28 @@ namespace MyProject.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        string role1 = "Requester";
+        string desc1 = "This is the developer's role";
+
+        string role2 = "Crowdworker";
+        string desc2 = "This is the reviewer's role";
+
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            RoleManager<ApplicationRole> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -69,61 +78,46 @@ namespace MyProject.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                if (Input.IsDeveloper == true)
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var result = await _userManager.CreateAsync(user, Input.Password);
+                if (result.Succeeded)
                 {
-                    var requester = new Requester { UserName = Input.Email, Email = Input.Email };
-                    var result = await _userManager.CreateAsync(requester, Input.Password);
-                    if (result.Succeeded)
+                    if (Input.IsDeveloper == true)
                     {
-                        _logger.LogInformation("User created a new account with password.");
-
-                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(requester);
-                        var callbackUrl = Url.Page(
-                            "/Account/ConfirmEmail",
-                            pageHandler: null,
-                            values: new { userId = requester.Id, code = code },
-                            protocol: Request.Scheme);
-
-                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                        await _signInManager.SignInAsync(requester, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        if (await _roleManager.FindByNameAsync(role1) == null)
+                        {
+                            await _roleManager.CreateAsync(new ApplicationRole(role1, desc1));
+                        }
+                        await _userManager.AddToRoleAsync(user, role1);
                     }
-                    foreach (var error in result.Errors)
+                    else
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        if (await _roleManager.FindByNameAsync(role2) == null)
+                        {
+                            await _roleManager.CreateAsync(new ApplicationRole(role2, desc2));
+                        }
+                        await _userManager.AddToRoleAsync(user, role2);
                     }
+                    _logger.LogInformation("User created a new account with password.");
+
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { userId = user.Id, code = code },
+                        protocol: Request.Scheme);
+
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
                 }
-                else if (Input.IsDeveloper != true)
+                foreach (var error in result.Errors)
                 {
-                    var crowdworker = new Crowdworker { UserName = Input.Email, Email = Input.Email };
-                    var result = await _userManager.CreateAsync(crowdworker, Input.Password);
-                    if (result.Succeeded)
-                    {
-                        _logger.LogInformation("User created a new account with password.");
-
-                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(crowdworker);
-                        var callbackUrl = Url.Page(
-                            "/Account/ConfirmEmail",
-                            pageHandler: null,
-                            values: new { userId = crowdworker.Id, code = code },
-                            protocol: Request.Scheme);
-
-                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                        await _signInManager.SignInAsync(crowdworker, isPersistent: false);
-                        return LocalRedirect(returnUrl);
-                    }
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
-                
             }
-
             // If we got this far, something failed, redisplay form
             return Page();
         }

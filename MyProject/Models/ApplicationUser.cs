@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyProject.Models
 {
-    public class Requester : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
-        [Required]
+        // Requester
         [StringLength(60)]
         public string DeveloperName { get; set; }
 
@@ -14,5 +14,8 @@ namespace MyProject.Models
         public string CompanyDescription { get; set; }
 
         public List<Game> MyGames { get; set; }
+
+        // Crowdworker
+        public List<Review> MyReviews { get; set; }
     }
 }
