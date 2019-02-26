@@ -44,6 +44,7 @@ namespace MyProject.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Crowdworker")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Details([Bind("GameID,GraphicQuality,Playability," +
@@ -96,6 +97,7 @@ namespace MyProject.Controllers
             return viewModel;
         }
 
+        [Authorize(Roles = "Requester")]
         // GET: Games/Create
         public IActionResult Create()
         {
@@ -105,6 +107,7 @@ namespace MyProject.Controllers
         // POST: Games/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Developer,Description,GameLink,AgeRating" +
@@ -120,6 +123,7 @@ namespace MyProject.Controllers
         }
 
         // GET: Games/Edit/5
+        [Authorize(Roles = "Requester")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -138,6 +142,7 @@ namespace MyProject.Controllers
         // POST: Games/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("GameID,Title,Developer,Description,GameLink," +
@@ -172,6 +177,7 @@ namespace MyProject.Controllers
         }
 
         // GET: Games/Delete/5
+        [Authorize(Roles = "Requester")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -190,6 +196,7 @@ namespace MyProject.Controllers
         }
 
         // POST: Games/Delete/5
+        [Authorize(Roles = "Requester")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -205,6 +212,7 @@ namespace MyProject.Controllers
             return _context.Games.Any(e => e.GameID == id);
         }
 
+        [Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> EditReview(int? id)
         {
             if (id == null)
@@ -220,6 +228,7 @@ namespace MyProject.Controllers
             return View(review);
         }
 
+        [Authorize(Roles = "Crowdworker")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditReview(int id, [Bind("ReviewID,GraphicQuality,Playability," +
@@ -254,6 +263,7 @@ namespace MyProject.Controllers
             return View(review);
         }
 
+        [Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> DeleteReview(int? id)
         {
             if (id == null)
@@ -271,6 +281,7 @@ namespace MyProject.Controllers
             return View(review);
         }
 
+        [Authorize(Roles = "Crowdworker")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteReview(int id)
