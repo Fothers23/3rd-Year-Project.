@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MyProject.Data.Migrations
+namespace MyProject.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,8 @@ namespace MyProject.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,7 +41,9 @@ namespace MyProject.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    DeveloperName = table.Column<string>(maxLength: 60, nullable: true),
+                    CompanyDescription = table.Column<string>(maxLength: 300, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -153,6 +156,73 @@ namespace MyProject.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Games",
+                columns: table => new
+                {
+                    GameID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(maxLength: 60, nullable: false),
+                    Developer = table.Column<string>(maxLength: 60, nullable: true),
+                    Description = table.Column<string>(maxLength: 250, nullable: true),
+                    GameLink = table.Column<string>(nullable: true),
+                    AgeRating = table.Column<string>(maxLength: 3, nullable: true),
+                    Genre = table.Column<string>(maxLength: 60, nullable: true),
+                    NumberOfPlayers = table.Column<int>(nullable: false),
+                    AvailablePlatforms = table.Column<string>(nullable: true),
+                    ReviewQuantity = table.Column<int>(nullable: false),
+                    ReviewReward = table.Column<string>(nullable: true),
+                    DatePosted = table.Column<DateTime>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Games", x => x.GameID);
+                    table.ForeignKey(
+                        name: "FK_Games_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    ReviewID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    GraphicQuality = table.Column<double>(nullable: false),
+                    Playability = table.Column<double>(nullable: false),
+                    StoryCharacterDevelopment = table.Column<double>(nullable: false),
+                    GameplayControls = table.Column<double>(nullable: false),
+                    Multiplayer = table.Column<double>(nullable: false),
+                    OverallRating = table.Column<double>(nullable: false),
+                    Pros = table.Column<string>(nullable: true),
+                    Cons = table.Column<string>(nullable: true),
+                    WrittenReview = table.Column<string>(nullable: true),
+                    Summary = table.Column<string>(maxLength: 200, nullable: true),
+                    DatePosted = table.Column<DateTime>(nullable: false),
+                    MyGameGameID = table.Column<int>(nullable: true),
+                    ApplicationUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.ReviewID);
+                    table.ForeignKey(
+                        name: "FK_Reviews_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Games_MyGameGameID",
+                        column: x => x.MyGameGameID,
+                        principalTable: "Games",
+                        principalColumn: "GameID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +261,21 @@ namespace MyProject.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Games_ApplicationUserId",
+                table: "Games",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_ApplicationUserId",
+                table: "Reviews",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_MyGameGameID",
+                table: "Reviews",
+                column: "MyGameGameID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,7 +296,13 @@ namespace MyProject.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Reviews");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Games");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
