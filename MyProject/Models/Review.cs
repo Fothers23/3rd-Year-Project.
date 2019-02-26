@@ -48,6 +48,6 @@ namespace MyProject.Models
             DatePosted = DateTime.Now;
         }
 
-        public virtual Game MyGame { get; set; }
+        public Game Game { get; set; }
     }
 }

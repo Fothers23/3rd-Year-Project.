@@ -18,6 +18,11 @@ namespace MyProject.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Game>()
+                .HasMany<Review>()
+                .WithOne(x => x.Game)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<Game> Games { get; set; }
