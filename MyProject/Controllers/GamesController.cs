@@ -53,19 +53,20 @@ namespace MyProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                Review review = new Review();
-                review.GraphicQuality = viewModel.GraphicQuality;
-                review.Playability = viewModel.Playability;
-                review.StoryCharacterDevelopment = viewModel.StoryCharacterDevelopment;
-                review.GameplayControls = viewModel.GameplayControls;
-                review.Multiplayer = viewModel.Multiplayer;
-                review.OverallRating = (viewModel.GraphicQuality + viewModel.Playability
-                    + viewModel.StoryCharacterDevelopment + viewModel.GameplayControls
-                    + viewModel.Multiplayer) / 5.0;
-                review.Pros = viewModel.Pros;
-                review.Cons = viewModel.Cons;
-                review.WrittenReview = viewModel.WrittenReview;
-                review.Summary = viewModel.Summary;
+                Review review = new Review
+                {
+                    GraphicQuality = viewModel.GraphicQuality,
+                    Playability = viewModel.Playability,
+                    StoryCharacterDevelopment = viewModel.StoryCharacterDevelopment,
+                    GameplayControls = viewModel.GameplayControls,
+                    Multiplayer = viewModel.Multiplayer,
+                    Pros = viewModel.Pros,
+                    Cons = viewModel.Cons,
+                    WrittenReview = viewModel.WrittenReview,
+                    Summary = viewModel.Summary
+                };
+
+                review.OverallRating = CalculateOverallRating(review);
 
                 Game game = await _context.Games
                     .SingleOrDefaultAsync(m => m.GameID == viewModel.GameID);
@@ -75,7 +76,7 @@ namespace MyProject.Controllers
                     return NotFound();
                 }
 
-                review.MyGame = game;
+                review.Game = game;
                 _context.Reviews.Add(review);
                 await _context.SaveChangesAsync();
 
@@ -91,7 +92,7 @@ namespace MyProject.Controllers
             viewModel.Game = game;
 
             List<Review> reviews = await _context.Reviews
-                .Where(x => x.MyGame == game).ToListAsync();
+                .Where(x => x.Game == game).ToListAsync();
 
             viewModel.Reviews = reviews;
             return viewModel;
@@ -244,6 +245,8 @@ namespace MyProject.Controllers
             {
                 try
                 {
+                    review.OverallRating = CalculateOverallRating(review);
+
                     _context.Update(review);
                     await _context.SaveChangesAsync();
                 }
@@ -295,6 +298,13 @@ namespace MyProject.Controllers
         private bool ReviewExists(int id)
         {
             return _context.Reviews.Any(e => e.ReviewID == id);
+        }
+
+        private double CalculateOverallRating(Review viewModel)
+        {
+            return (viewModel.GraphicQuality + viewModel.Playability
+                    + viewModel.StoryCharacterDevelopment + viewModel.GameplayControls
+                    + viewModel.Multiplayer) / 5.0;
         }
     }
 }
