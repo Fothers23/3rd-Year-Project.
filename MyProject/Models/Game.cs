@@ -1,18 +1,23 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyProject.Models
 {
     public class Game
     {
+        private readonly UserManager<ApplicationUser> userManager;
+
         [Key, ScaffoldColumn(false)]
         public int GameID { get; set; }
+            
+        [FileExtensions]
+        public string Picture { get; set; }
 
         [Required, StringLength(60)]
         public string Title { get; set; }
-
-        [StringLength(60)]
-        public string Developer { get; set; }
+        
+        public ApplicationUser Developer { get; set; }
 
         [StringLength(250)]
         [DataType(DataType.MultilineText)]

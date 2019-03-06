@@ -9,39 +9,19 @@
 <p>
     <a asp-action="Create">Submit a New Game</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Developer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReviewReward)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Developer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewReward)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.GameID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.GameID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.GameID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3" style="margin-bottom:20px">
+                <div class="thumbnail">
+                    <div class="image" style="margin-bottom:20px">
+                        <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
+                    </div>
+                    <div class="caption" style="border-top:3px solid #808080">
+                        <h3><a asp-controller="Reviews" asp-action="Create">@item.Title</a></h3>
+                        <h4>@item.Developer</h4>
+                        <h5>@item.ReviewReward</h5>
+                        <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
+                    </div>
+                </div>
+            </div>
+        }

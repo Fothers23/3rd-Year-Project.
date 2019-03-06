@@ -4,18 +4,17 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Profile</h2>
-
 <div>
-    <h4>@Html.DisplayFor(model => model.UserName)</h4>
+    @*<div class="col-md-3" style="margin-bottom:25px">
+        <div class="thumbnail">
+            <div class="image">
+                <img class="img-responsive" src="~/images/" height="350" width="350"/>
+            </div>
+        </div>
+    </div>*@
+    <h2>@Html.DisplayFor(model => model.DeveloperName)</h2>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DeveloperName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DeveloperName)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.CompanyDescription)
         </dt>
