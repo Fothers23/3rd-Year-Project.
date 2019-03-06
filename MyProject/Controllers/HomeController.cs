@@ -21,6 +21,11 @@ namespace MyProject.Controllers
             userManager = _userManager;
         }
 
+        public IActionResult Entry()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult Index()
         {

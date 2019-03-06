@@ -88,7 +88,7 @@ namespace MyProject
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Games}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Entry}/{id?}");
             });
         }
     }
