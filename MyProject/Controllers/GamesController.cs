@@ -42,19 +42,6 @@ namespace MyProject.Controllers
             return View(game);
         }
 
-        //private async Task<GameDetailsViewModel> GetViewModelFromGame(Game game)
-        //{
-        //    GameDetailsViewModel viewModel = new GameDetailsViewModel();
-
-        //    viewModel.Game = game;
-
-        //    List<Review> reviews = await _context.Reviews
-        //        .Where(x => x.Game == game).ToListAsync();
-
-        //    viewModel.Reviews = reviews;
-        //    return viewModel;
-        //}
-
         [Authorize(Roles = "Requester")]
         // GET: Games/Create
         public IActionResult Create()

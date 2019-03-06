@@ -27,5 +27,6 @@ namespace MyProject.Data
 
         public DbSet<Game> Games { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<MyProject.Models.ApplicationRole> ApplicationRole { get; set; }
     }
 }
