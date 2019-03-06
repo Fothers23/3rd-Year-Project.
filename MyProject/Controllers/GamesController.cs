@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyProject.Data;
 using MyProject.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyProject.Controllers
 {
@@ -39,64 +38,22 @@ namespace MyProject.Controllers
             {
                 return NotFound();
             }
-            GameDetailsViewModel viewModel = await GetViewModelFromGame(game);
 
-            return View(viewModel);
+            return View(game);
         }
 
-        [Authorize(Roles = "Crowdworker")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details([Bind("GameID,GraphicQuality,Playability," +
-            "StoryCharacterDevelopment,GameplayControls,Multiplayer,Pros,Cons,WrittenReview," +
-            "Summary")] GameDetailsViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                Review review = new Review
-                {
-                    GraphicQuality = viewModel.GraphicQuality,
-                    Playability = viewModel.Playability,
-                    StoryCharacterDevelopment = viewModel.StoryCharacterDevelopment,
-                    GameplayControls = viewModel.GameplayControls,
-                    Multiplayer = viewModel.Multiplayer,
-                    Pros = viewModel.Pros,
-                    Cons = viewModel.Cons,
-                    WrittenReview = viewModel.WrittenReview,
-                    Summary = viewModel.Summary
-                };
+        //private async Task<GameDetailsViewModel> GetViewModelFromGame(Game game)
+        //{
+        //    GameDetailsViewModel viewModel = new GameDetailsViewModel();
 
-                review.OverallRating = CalculateOverallRating(review);
+        //    viewModel.Game = game;
 
-                Game game = await _context.Games
-                    .SingleOrDefaultAsync(m => m.GameID == viewModel.GameID);
+        //    List<Review> reviews = await _context.Reviews
+        //        .Where(x => x.Game == game).ToListAsync();
 
-                if (game == null)
-                {
-                    return NotFound();
-                }
-
-                review.Game = game;
-                _context.Reviews.Add(review);
-                await _context.SaveChangesAsync();
-
-                viewModel = await GetViewModelFromGame(game);
-            }
-            return View(viewModel);
-        }
-
-        private async Task<GameDetailsViewModel> GetViewModelFromGame(Game game)
-        {
-            GameDetailsViewModel viewModel = new GameDetailsViewModel();
-
-            viewModel.Game = game;
-
-            List<Review> reviews = await _context.Reviews
-                .Where(x => x.Game == game).ToListAsync();
-
-            viewModel.Reviews = reviews;
-            return viewModel;
-        }
+        //    viewModel.Reviews = reviews;
+        //    return viewModel;
+        //}
 
         [Authorize(Roles = "Requester")]
         // GET: Games/Create
@@ -106,8 +63,6 @@ namespace MyProject.Controllers
         }
 
         // POST: Games/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -141,8 +96,6 @@ namespace MyProject.Controllers
         }
 
         // POST: Games/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -211,100 +164,6 @@ namespace MyProject.Controllers
         private bool GameExists(int id)
         {
             return _context.Games.Any(e => e.GameID == id);
-        }
-
-        [Authorize(Roles = "Crowdworker")]
-        public async Task<IActionResult> EditReview(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var review = await _context.Reviews.FindAsync(id);
-            if (review == null)
-            {
-                return NotFound();
-            }
-            return View(review);
-        }
-
-        [Authorize(Roles = "Crowdworker")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditReview(int id, [Bind("ReviewID,GraphicQuality,Playability," +
-            "StoryCharacterDevelopment,GameplayControls,Multiplayer,Pros,Cons,WrittenReview," +
-            "Summary")] Review review)
-        {
-            if (id != review.ReviewID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    review.OverallRating = CalculateOverallRating(review);
-
-                    _context.Update(review);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReviewExists(review.ReviewID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(review);
-        }
-
-        [Authorize(Roles = "Crowdworker")]
-        public async Task<IActionResult> DeleteReview(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var review = await _context.Reviews
-                .FirstOrDefaultAsync(m => m.ReviewID == id);
-            if (review == null)
-            {
-                return NotFound();
-            }
-
-            return View(review);
-        }
-
-        [Authorize(Roles = "Crowdworker")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteReview(int id)
-        {
-            var review = await _context.Reviews.FindAsync(id);
-            _context.Reviews.Remove(review);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ReviewExists(int id)
-        {
-            return _context.Reviews.Any(e => e.ReviewID == id);
-        }
-
-        private double CalculateOverallRating(Review viewModel)
-        {
-            return (viewModel.GraphicQuality + viewModel.Playability
-                    + viewModel.StoryCharacterDevelopment + viewModel.GameplayControls
-                    + viewModel.Multiplayer) / 5.0;
         }
     }
 }
