@@ -55,7 +55,8 @@ namespace MyProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Crowdworker")]
-        public async Task<IActionResult> Create([Bind("Game,GraphicQuality,Playability,StoryCharacterDevelopment,GameplayControls,Multiplayer,OverallRating,Pros,Cons,WrittenReview,Summary,DatePosted")] Review review)
+        public async Task<IActionResult> Create([Bind("GameID,GraphicQuality,Playability,StoryCharacterDevelopment," +
+            "GameplayControls,Multiplayer,OverallRating,Pros,Cons,WrittenReview,Summary,DatePosted")] Review review)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +88,9 @@ namespace MyProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Crowdworker")]
-        public async Task<IActionResult> Edit(int id, [Bind("Game,GraphicQuality,Playability,StoryCharacterDevelopment,GameplayControls,Multiplayer,OverallRating,Pros,Cons,WrittenReview,Summary,DatePosted")] Review review)
+        public async Task<IActionResult> Edit(int id, [Bind("GameID,GraphicQuality,Playability,StoryCharacterDevelopment," +
+            "GameplayControls,Multiplayer,OverallRating,Pros,Cons,WrittenReview," +
+            "Summary,DatePosted")] Review review)
         {
             if (id != review.ReviewID)
             {

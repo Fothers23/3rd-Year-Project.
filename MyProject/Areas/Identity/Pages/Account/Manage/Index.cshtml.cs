@@ -40,16 +40,14 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Full name")]
             public string Name { get; set; }
 
             [Required]
             [EmailAddress]
             public string Email { get; set; }
 
-           
-
             [StringLength(300)]
+            [DataType(DataType.MultilineText)]
             [Display(Name = "Company Description")]
             public string CompanyDescription { get; set; }
 
@@ -74,7 +72,10 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 Name = user.Name,
-                Email = email
+                Email = email,
+                CompanyDescription = user.CompanyDescription,
+                Budget = user.Budget,
+                Spent = user.Spent
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -98,6 +99,16 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             if (Input.Name != user.Name)
             {
                 user.Name = Input.Name;
+            }
+
+            if (Input.CompanyDescription != user.CompanyDescription)
+            {
+                user.CompanyDescription = Input.CompanyDescription;
+            }
+
+            if (Input.Budget != user.Budget)
+            {
+                user.Budget = Input.Budget;
             }
 
             var email = await _userManager.GetEmailAsync(user);
