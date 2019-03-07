@@ -42,7 +42,7 @@ namespace MyProject.Controllers
             return View(game);
         }
 
-        [Authorize(Roles = "Requester")]
+        //[Authorize(Roles = "Requester")]
         // GET: Games/Create
         public IActionResult Create()
         {
@@ -50,7 +50,7 @@ namespace MyProject.Controllers
         }
 
         // POST: Games/Create
-        [Authorize(Roles = "Requester")]
+        //[Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Developer,Description,GameLink,AgeRating" +
@@ -66,7 +66,7 @@ namespace MyProject.Controllers
         }
 
         // GET: Games/Edit/5
-        [Authorize(Roles = "Requester")]
+        //[Authorize(Roles = "Requester")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,7 +83,7 @@ namespace MyProject.Controllers
         }
 
         // POST: Games/Edit/5
-        [Authorize(Roles = "Requester")]
+        //[Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("GameID,Title,Developer,Description,GameLink," +
@@ -118,7 +118,7 @@ namespace MyProject.Controllers
         }
 
         // GET: Games/Delete/5
-        [Authorize(Roles = "Requester")]
+        //[Authorize(Roles = "Requester")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,7 +137,7 @@ namespace MyProject.Controllers
         }
 
         // POST: Games/Delete/5
-        [Authorize(Roles = "Requester")]
+        //[Authorize(Roles = "Requester")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

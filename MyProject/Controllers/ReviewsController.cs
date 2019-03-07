@@ -19,14 +19,14 @@ namespace MyProject.Controllers
         }
 
         // GET: Reviews
-        [Authorize(Roles = "Crowdworker, Requester")]
+        //[Authorize(Roles = "Crowdworker, Requester")]
         public async Task<IActionResult> Index(int id)
         {
             return View(await _context.Reviews.Where(x => x.Game.GameID == id).ToListAsync());
         }
 
         // GET: Reviews/Details/5
-        [Authorize(Roles = "Crowdworker")]
+        //[Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -45,7 +45,7 @@ namespace MyProject.Controllers
         }
 
         // GET: Reviews/Create
-        [Authorize(Roles = "Crowdworker")]
+        //[Authorize(Roles = "Crowdworker")]
         public IActionResult Create()
         {
             return View();
@@ -54,7 +54,7 @@ namespace MyProject.Controllers
         // POST: Reviews/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Crowdworker")]
+        //[Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> Create([Bind("Game,GraphicQuality,Playability,StoryCharacterDevelopment,GameplayControls,Multiplayer,OverallRating,Pros,Cons,WrittenReview,Summary,DatePosted")] Review review)
         {
             if (ModelState.IsValid)
@@ -67,7 +67,7 @@ namespace MyProject.Controllers
         }
 
         // GET: Reviews/Edit/5
-        [Authorize(Roles = "Crowdworker")]
+        //[Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,7 +86,7 @@ namespace MyProject.Controllers
         // POST: Reviews/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Crowdworker")]
+        //[Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> Edit(int id, [Bind("Game,GraphicQuality,Playability,StoryCharacterDevelopment,GameplayControls,Multiplayer,OverallRating,Pros,Cons,WrittenReview,Summary,DatePosted")] Review review)
         {
             if (id != review.ReviewID)
@@ -120,7 +120,7 @@ namespace MyProject.Controllers
         }
 
         // GET: Reviews/Delete/5
-        [Authorize(Roles = "Crowdworker")]
+        //[Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,7 +141,7 @@ namespace MyProject.Controllers
         // POST: Reviews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Crowdworker")]
+        //[Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var review = await _context.Reviews.FindAsync(id);

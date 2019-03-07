@@ -21,24 +21,10 @@ namespace MyProject.Controllers
             userManager = _userManager;
         }
 
-        public IActionResult Entry()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Index()
         {
-            var userId = userManager.GetUserId(HttpContext.User);
-            if (userId == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-            else
-            {
-                ApplicationUser user = userManager.FindByIdAsync(userId).Result;
-                return View(user);
-            }
+            return View();
         }
 
         public IActionResult About()
@@ -64,57 +50,6 @@ namespace MyProject.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        [HttpGet]
-        public IActionResult Edit()
-        {
-            var userId = userManager.GetUserId(HttpContext.User);
-            if (userId == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ApplicationUser user = userManager.FindByIdAsync(userId).Result;
-                return View(user);
-            }
-        }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,DeveloperName,CompanyDescription")] ApplicationUser user)
-        {
-            if (id != user.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    db.Update(user);
-                    await db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-            }
-            return View(user);
-        }
-
-        private bool UserExists(string id)
-        {
-            return db.Users.Any(u => u.Id == id);
         }
     }
 }
