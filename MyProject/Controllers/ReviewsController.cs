@@ -46,20 +46,24 @@ namespace MyProject.Controllers
 
         // GET: Reviews/Create
         //[Authorize(Roles = "Crowdworker")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int gameId)
         {
-            return View();
+            var game = await _context.Games.FirstOrDefaultAsync(x => x.GameID == gameId);
+            return View(new Review { Game = game });
         }
 
         // POST: Reviews/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Crowdworker")]
-        public async Task<IActionResult> Create([Bind("GameID,GraphicQuality,Playability,StoryCharacterDevelopment," +
+        public async Task<IActionResult> Create([Bind("Game,GraphicQuality,Playability,StoryCharacterDevelopment," +
             "GameplayControls,Multiplayer,OverallRating,Pros,Cons,WrittenReview,Summary,DatePosted")] Review review)
         {
             if (ModelState.IsValid)
             {
+                var game = await _context.Games.FirstOrDefaultAsync(x => x.GameID == review.Game.GameID);
+                review.Game = game;
+
                 _context.Add(review);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

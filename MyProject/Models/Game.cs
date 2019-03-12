@@ -6,8 +6,6 @@ namespace MyProject.Models
 {
     public class Game
     {
-        private readonly UserManager<ApplicationUser> userManager;
-
         [Key, ScaffoldColumn(false)]
         public int GameID { get; set; }
             
