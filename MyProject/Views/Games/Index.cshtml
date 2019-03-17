@@ -19,7 +19,7 @@
                     <div class="caption" style="border-top:3px solid #808080">
                         <h3><a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@item.GameID">@item.Title</a></h3>
                         <h4>@item.Developer</h4>
-                        <h5>@item.ReviewReward</h5>
+                        <h5>Reward: @item.ReviewReward</h5>
                         <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
                     </div>
                 </div>

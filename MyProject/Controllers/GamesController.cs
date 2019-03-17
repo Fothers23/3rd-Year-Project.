@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyProject.Data;
 using MyProject.Models;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,10 +15,28 @@ namespace MyProject.Controllers
     public class GamesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment _appEnvironment;
 
-        public GamesController(ApplicationDbContext context)
+        public GamesController(ApplicationDbContext context, IHostingEnvironment appEnvironment)
         {
             _context = context;
+            _appEnvironment = appEnvironment;
+        }
+
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0) return Content("file not selected");
+
+            string pathRoot = _appEnvironment.WebRootPath;
+            string pathToImages = pathRoot + "\\images\\" + file.FileName;
+
+            using (var stream = new FileStream(pathToImages, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            ViewData["FilePath"] = pathToImages;
+            return View("Create");
         }
 
         // GET: Games
@@ -53,7 +74,7 @@ namespace MyProject.Controllers
         //[Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Developer,Description,GameLink,AgeRating" +
+        public async Task<IActionResult> Create([Bind("Picture,Title,Developer,Description,GameLink,AgeRating" +
             ",Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward,DatePosted")] Game game)
         {
             if (ModelState.IsValid)
@@ -152,5 +173,7 @@ namespace MyProject.Controllers
         {
             return _context.Games.Any(e => e.GameID == id);
         }
+
+
     }
 }

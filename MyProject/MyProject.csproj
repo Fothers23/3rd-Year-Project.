@@ -10,11 +10,15 @@
     <Compile Remove="Data\Migrations\20190225143531_Init.Designer.cs" />
     <Compile Remove="Data\Migrations\20190225143858_Init.cs" />
     <Compile Remove="Data\Migrations\20190225143858_Init.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190317135202_Image.cs" />
+    <Compile Remove="Data\Migrations\20190317135202_Image.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" PrivateAssets="All" />
   </ItemGroup>
 
