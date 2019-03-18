@@ -65,9 +65,10 @@ namespace MyProject.Controllers
 
         //[Authorize(Roles = "Requester")]
         // GET: Games/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(string userId)
         {
-            return View();
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            return View(new Game { Developer = user });
         }
 
         // POST: Games/Create
@@ -79,6 +80,9 @@ namespace MyProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == game.Developer.Id);
+                game.Developer = user;
+
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

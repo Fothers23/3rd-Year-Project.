@@ -66,11 +66,20 @@
         </dd>
     </dl>
 </div>
+@if (User.IsInRole("Requester"))
+{
+    <div>
+        <a asp-controller="Reviews" asp-action="Index" asp-route-id="@Model.GameID">Reviews</a>
+    </div>
+    <br />
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.GameID">Edit</a> |
+        <a asp-action="Delete" asp-route-id="@Model.GameID">Delete</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+else
+{
+    <a asp-action="Index">Back to List</a>
+}
 
-<div>
-    <a asp-controller="Reviews" asp-action="Index" asp-route-id="@Model.GameID">Reviews</a>
-</div>
-
-<div>
-    <a asp-controller="Games" asp-action="Edit" asp-route-id="@Model.GameID">Edit</a> | <a asp-controller="Games" asp-action="Delete" asp-route-id="@Model.GameID">Delete</a> | <a asp-action="Index">Back to List</a>
-</div>

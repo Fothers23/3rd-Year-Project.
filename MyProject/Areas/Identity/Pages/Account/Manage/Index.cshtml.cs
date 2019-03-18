@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             [EmailAddress]
             public string Email { get; set; }
 
+            //Requester
             [StringLength(300)]
             [DataType(DataType.MultilineText)]
             [Display(Name = "Company Description")]
@@ -54,6 +56,15 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             public double Budget { get; set; }
 
             public double Spent { get; set; }
+
+            [Display(Name = "My Games")]
+            public List<Game> MyGames { get; set; }
+
+            //Crowdworker
+            public double Rating { get; set; }
+
+            [Display(Name = "My Reviews")]
+            public List<Review> MyReviews { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -75,7 +86,10 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
                 Email = email,
                 CompanyDescription = user.CompanyDescription,
                 Budget = user.Budget,
-                Spent = user.Spent
+                Spent = user.Spent,
+                MyGames = user.MyGames,
+                Rating = user.Rating,
+                MyReviews = user.MyReviews
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);

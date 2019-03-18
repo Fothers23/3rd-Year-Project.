@@ -6,9 +6,6 @@
 
 <h2>Index</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -49,9 +46,7 @@
                 @Html.DisplayFor(modelItem => item.DatePosted)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ReviewID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ReviewID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ReviewID">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.ReviewID">Details</a>
             </td>
         </tr>
 }

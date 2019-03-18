@@ -18,11 +18,13 @@ namespace MyProject.Models
 
         public double Spent { get; set; }
 
+        [Display(Name = "My Games")]
         public List<Game> MyGames { get; set; }
 
         // Crowdworker
         public double Rating { get; set; }
 
+        [Display(Name = "My Reviews")]
         public List<Review> MyReviews { get; set; }
     }
 }

@@ -6,22 +6,36 @@
 
 <h2>Available Games for Review</h2>
 
-<p>
-    <a asp-action="Create">Submit a New Game</a>
-</p>
-        @foreach (var item in Model)
-        {
-            <div class="col-md-3" style="margin-bottom:20px">
-                <div class="thumbnail">
-                    <div class="image" style="margin-bottom:20px">
-                        <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
-                    </div>
-                    <div class="caption" style="border-top:3px solid #808080">
-                        <h3><a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@item.GameID">@item.Title</a></h3>
-                        <h4>@item.Developer</h4>
-                        <h5>Reward: @item.ReviewReward</h5>
-                        <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
-                    </div>
+@if (User.IsInRole("Requester"))
+{
+    <p>
+        <a asp-action="Create">Submit a New Game</a>
+    </p>
+}
+
+@foreach (var item in Model)
+{
+    <div class="col-md-3" style="margin-bottom:20px">
+        <div class="thumbnail">
+            @if (item.Picture != null)
+            {
+                <div class="image" style="margin-bottom:20px">
+                    <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
                 </div>
+            }
+            <div class="caption" style="border-top:3px solid #808080">
+                @if (User.IsInRole("Crowdworker"))
+                {
+                    <h3><a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@item.GameID">@item.Title</a></h3>
+                }
+                else
+                {
+                    <h3>@item.Title</h3>
+                }
+                <h4>@item.Developer</h4>
+                <h5>Reward: @item.ReviewReward</h5>
+                <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
             </div>
-        }
+        </div>
+    </div>
+}

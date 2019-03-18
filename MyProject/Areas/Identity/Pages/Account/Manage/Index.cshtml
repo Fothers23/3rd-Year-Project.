@@ -35,23 +35,29 @@
                     <label asp-for="Input.Name"></label>
                     <input asp-for="Input.Name" class="form-control" />
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.CompanyDescription"></label>
-                    <input asp-for="Input.CompanyDescription" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Budget"></label>
-                    <input asp-for="Input.Budget" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Spent"></label>
-                    <input asp-for="Input.Spent" class="form-control" disabled />
-                </div>
-            </div>
-            <button type="submit" class="btn btn-default">Save</button>
-        </form>
+                @if (User.IsInRole("Requester"))
+                {
+                    <div class="form-group">
+                        <label asp-for="Input.CompanyDescription"></label>
+                        <input asp-for="Input.CompanyDescription" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Budget"></label>
+                        <input asp-for="Input.Budget" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Spent"></label>
+                        <input asp-for="Input.Spent" class="form-control" disabled />
+                    </div>
+                    <div>
+                        <label asp-for="Input.MyGames"></label>
+                        
+                    </div>
+                }
+                <button type="submit" class="btn btn-default">Save</button>
+            </form>
+        </div>
     </div>
-</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
