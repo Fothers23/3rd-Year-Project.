@@ -63,10 +63,11 @@ namespace MyProject.Controllers
             {
                 var game = await _context.Games.FirstOrDefaultAsync(x => x.GameID == review.Game.GameID);
                 review.Game = game;
+                review.OverallRating = CalculateOverallRating(review);
 
                 _context.Add(review);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { id = review.Game.GameID } );
             }
             return View(review);
         }
@@ -121,7 +122,7 @@ namespace MyProject.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { id = review.Game.GameID });
             }
             return View(review);
         }
@@ -151,10 +152,10 @@ namespace MyProject.Controllers
         //[Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var review = await _context.Reviews.FindAsync(id);
+            var review = await _context.Reviews.Include(r => r.Game).FirstOrDefaultAsync(x => x.ReviewID == id);
             _context.Reviews.Remove(review);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { id = review.Game.GameID });
         }
 
         private bool ReviewExists(int id)
