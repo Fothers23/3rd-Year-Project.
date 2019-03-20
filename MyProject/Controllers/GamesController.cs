@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyProject.Data;
@@ -16,6 +17,8 @@ namespace MyProject.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IHostingEnvironment _appEnvironment;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
         public GamesController(ApplicationDbContext context, IHostingEnvironment appEnvironment)
         {
@@ -26,16 +29,16 @@ namespace MyProject.Controllers
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
             if (file == null || file.Length == 0) return Content("file not selected");
-
             string pathRoot = _appEnvironment.WebRootPath;
             string pathToImages = pathRoot + "\\images\\" + file.FileName;
+            string image = file.FileName;
 
             using (var stream = new FileStream(pathToImages, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
 
-            ViewData["FilePath"] = pathToImages;
+            ViewData["Image"] = image;
             return View("Create");
         }
 
@@ -65,23 +68,22 @@ namespace MyProject.Controllers
 
         //[Authorize(Roles = "Requester")]
         // GET: Games/Create
-        public async Task<IActionResult> Create(string userId)
+        public IActionResult Create()
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            return View(new Game { Developer = user });
+            return View();
         }
 
         // POST: Games/Create
         //[Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Picture,Title,Developer,Description,GameLink,AgeRating" +
-            ",Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward,DatePosted")] Game game)
+        public async Task<IActionResult> Create([Bind("Picture,Title,Developer,Description,GameLink,AgeRating," +
+            "Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward,DatePosted")] Game game)
         {
             if (ModelState.IsValid)
             {
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == game.Developer.Id);
-                game.Developer = user;
+                //var user = await userManager.GetUserAsync(User);
+                //game.Developer = user;
 
                 _context.Add(game);
                 await _context.SaveChangesAsync();

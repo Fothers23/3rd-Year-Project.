@@ -8,8 +8,7 @@ namespace MyProject.Models
     {
         [Key, ScaffoldColumn(false)]
         public int GameID { get; set; }
-            
-        [FileExtensions]
+
         public string Picture { get; set; }
 
         [Required, StringLength(60)]
@@ -40,9 +39,11 @@ namespace MyProject.Models
 
         [Display(Name = "Reviews Required")]
         public int ReviewQuantity { get; set; }
-
+        
         [Display(Name = "Reward for review")]
-        public string ReviewReward { get; set; }
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        public decimal ReviewReward { get; set; }
 
         [Display(Name = "Date Posted")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]

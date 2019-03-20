@@ -14,9 +14,13 @@ namespace MyProject.Models
         [Display(Name = "Company Description")]
         public string CompanyDescription { get; set; }
 
-        public double Budget { get; set; }
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        public decimal Budget { get; set; }
 
-        public double Spent { get; set; }
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        public decimal Spent { get; set; }
 
         [Display(Name = "My Games")]
         public List<Game> MyGames { get; set; }

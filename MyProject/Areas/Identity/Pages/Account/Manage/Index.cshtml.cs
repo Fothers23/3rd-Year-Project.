@@ -53,9 +53,11 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Company Description")]
             public string CompanyDescription { get; set; }
 
-            public double Budget { get; set; }
+            [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+            public decimal Budget { get; set; }
 
-            public double Spent { get; set; }
+            [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+            public decimal Spent { get; set; }
 
             [Display(Name = "My Games")]
             public List<Game> MyGames { get; set; }

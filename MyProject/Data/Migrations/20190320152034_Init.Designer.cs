@@ -10,8 +10,8 @@ using MyProject.Data;
 namespace MyProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190307135831_UserAttributes2")]
-    partial class UserAttributes2
+    [Migration("20190320152034_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -144,16 +144,13 @@ namespace MyProject.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<double>("Budget");
+                    b.Property<decimal>("Budget");
 
                     b.Property<string>("CompanyDescription")
                         .HasMaxLength(300);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<string>("DeveloperName")
-                        .HasMaxLength(60);
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -182,7 +179,7 @@ namespace MyProject.Migrations
 
                     b.Property<string>("SecurityStamp");
 
-                    b.Property<double>("Spent");
+                    b.Property<decimal>("Spent");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -231,7 +228,7 @@ namespace MyProject.Migrations
 
                     b.Property<int>("ReviewQuantity");
 
-                    b.Property<string>("ReviewReward");
+                    b.Property<decimal>("ReviewReward");
 
                     b.Property<string>("Title")
                         .IsRequired()

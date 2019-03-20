@@ -42,8 +42,11 @@ namespace MyProject.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    DeveloperName = table.Column<string>(maxLength: 60, nullable: true),
-                    CompanyDescription = table.Column<string>(maxLength: 300, nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    CompanyDescription = table.Column<string>(maxLength: 300, nullable: true),
+                    Budget = table.Column<decimal>(nullable: false),
+                    Spent = table.Column<decimal>(nullable: false),
+                    Rating = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -162,8 +165,9 @@ namespace MyProject.Migrations
                 {
                     GameID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Picture = table.Column<string>(nullable: true),
                     Title = table.Column<string>(maxLength: 60, nullable: false),
-                    Developer = table.Column<string>(maxLength: 60, nullable: true),
+                    DeveloperId = table.Column<string>(nullable: true),
                     Description = table.Column<string>(maxLength: 250, nullable: true),
                     GameLink = table.Column<string>(nullable: true),
                     AgeRating = table.Column<string>(maxLength: 3, nullable: true),
@@ -171,16 +175,15 @@ namespace MyProject.Migrations
                     NumberOfPlayers = table.Column<int>(nullable: false),
                     AvailablePlatforms = table.Column<string>(nullable: true),
                     ReviewQuantity = table.Column<int>(nullable: false),
-                    ReviewReward = table.Column<string>(nullable: true),
-                    DatePosted = table.Column<DateTime>(nullable: false),
-                    ApplicationUserId = table.Column<string>(nullable: true)
+                    ReviewReward = table.Column<decimal>(nullable: false),
+                    DatePosted = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Games", x => x.GameID);
                     table.ForeignKey(
-                        name: "FK_Games_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Games_AspNetUsers_DeveloperId",
+                        column: x => x.DeveloperId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -203,7 +206,7 @@ namespace MyProject.Migrations
                     WrittenReview = table.Column<string>(nullable: true),
                     Summary = table.Column<string>(maxLength: 200, nullable: true),
                     DatePosted = table.Column<DateTime>(nullable: false),
-                    MyGameGameID = table.Column<int>(nullable: true),
+                    GameID = table.Column<int>(nullable: true),
                     ApplicationUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -216,11 +219,11 @@ namespace MyProject.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reviews_Games_MyGameGameID",
-                        column: x => x.MyGameGameID,
+                        name: "FK_Reviews_Games_GameID",
+                        column: x => x.GameID,
                         principalTable: "Games",
                         principalColumn: "GameID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -263,9 +266,9 @@ namespace MyProject.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Games_ApplicationUserId",
+                name: "IX_Games_DeveloperId",
                 table: "Games",
-                column: "ApplicationUserId");
+                column: "DeveloperId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_ApplicationUserId",
@@ -273,9 +276,9 @@ namespace MyProject.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_MyGameGameID",
+                name: "IX_Reviews_GameID",
                 table: "Reviews",
-                column: "MyGameGameID");
+                column: "GameID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
