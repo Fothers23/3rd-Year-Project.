@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using MyProject.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
@@ -26,19 +29,22 @@ namespace MyProject.Areas.Identity.Pages.Account
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IHostingEnvironment _appEnvironment;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<ApplicationRole> roleManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IHostingEnvironment appEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _logger = logger;
             _emailSender = emailSender;
+            _appEnvironment = appEnvironment;
         }
 
         [BindProperty]
@@ -48,6 +54,8 @@ namespace MyProject.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            public string Image { get; set; }
+
             [Required]
             [DataType(DataType.Text)]
             public string Name { get; set; }
@@ -77,12 +85,25 @@ namespace MyProject.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(IFormFile file, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+            if (file == null || file.Length == 0) return Content("file not selected");
+            string pathRoot = _appEnvironment.WebRootPath;
+            string pathToImages = pathRoot + "\\images\\" + file.FileName;
+            string image = file.FileName;
+
+            using (var stream = new FileStream(pathToImages, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            ViewData["Image"] = image;
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { Image = image, Name = Input.Name,
+                    UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

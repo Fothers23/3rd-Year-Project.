@@ -43,6 +43,8 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             [DataType(DataType.Text)]
             public string Name { get; set; }
 
+            public string Image { get; set; }
+
             [Required]
             [EmailAddress]
             public string Email { get; set; }
@@ -85,6 +87,7 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 Name = user.Name,
+                Image = user.Image,
                 Email = email,
                 CompanyDescription = user.CompanyDescription,
                 Budget = user.Budget,
@@ -115,6 +118,11 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             if (Input.Name != user.Name)
             {
                 user.Name = Input.Name;
+            }
+
+            if (Input.Image != user.Image)
+            {
+                user.Image = Input.Image;
             }
 
             if (Input.CompanyDescription != user.CompanyDescription)
