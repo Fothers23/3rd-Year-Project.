@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyProject.Data;
 
 namespace MyProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190321160717_Developer")]
+    partial class Developer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,15 +280,11 @@ namespace MyProject.Migrations
 
                     b.Property<string>("WrittenReview");
 
-                    b.Property<string>("userId");
-
                     b.HasKey("ReviewID");
 
                     b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("GameID");
-
-                    b.HasIndex("userId");
 
                     b.ToTable("Reviews");
                 });
@@ -358,10 +356,6 @@ namespace MyProject.Migrations
                         .WithMany()
                         .HasForeignKey("GameID")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MyProject.Models.ApplicationUser", "user")
-                        .WithMany()
-                        .HasForeignKey("userId");
                 });
 #pragma warning restore 612, 618
         }

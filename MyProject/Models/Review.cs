@@ -52,5 +52,8 @@ namespace MyProject.Models
         }
 
         public Game Game { get; set; }
+
+        public ApplicationUser user { get; set; }
+
     }
 }

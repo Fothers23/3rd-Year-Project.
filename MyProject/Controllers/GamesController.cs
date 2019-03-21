@@ -17,13 +17,16 @@ namespace MyProject.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IHostingEnvironment _appEnvironment;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public GamesController(ApplicationDbContext context, IHostingEnvironment appEnvironment)
+        public GamesController(ApplicationDbContext context, IHostingEnvironment appEnvironment,
+            UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
             _appEnvironment = appEnvironment;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IActionResult> UploadImage(IFormFile file)
@@ -82,9 +85,11 @@ namespace MyProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var user = await userManager.GetUserAsync(User);
-                //game.Developer = user;
-
+                if (_signInManager.IsSignedIn(User))
+                {
+                    var user = await _userManager.GetUserAsync(User);
+                    game.Developer = user;
+                }
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

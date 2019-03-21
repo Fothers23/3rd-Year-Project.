@@ -23,6 +23,15 @@ namespace MyProject.Data
                 .HasMany<Review>()
                 .WithOne(x => x.Game)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany<Game>()
+                .WithOne(x => x.Developer)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<ApplicationUser>()
+                .HasMany<Review>()
+                .WithOne(x => x.user);
         }
 
         public DbSet<Game> Games { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyProject.Data;
@@ -12,10 +13,15 @@ namespace MyProject.Controllers
     public class ReviewsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public ReviewsController(ApplicationDbContext context)
+        public ReviewsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, 
+            SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // GET: Reviews
@@ -61,10 +67,15 @@ namespace MyProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (_signInManager.IsSignedIn(User))
+                {
+                    var user = await _userManager.GetUserAsync(User);
+                    review.user = user;
+                }
                 var game = await _context.Games.FirstOrDefaultAsync(x => x.GameID == review.Game.GameID);
                 review.Game = game;
                 review.OverallRating = CalculateOverallRating(review);
-                review.Game.Developer.Spent = review.Game.Developer.Budget - review.Game.ReviewReward;
+                //review.Game.Developer.Spent = review.Game.Developer.Budget - review.Game.ReviewReward;
 
                 _context.Add(review);
                 await _context.SaveChangesAsync();

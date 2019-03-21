@@ -12,8 +12,6 @@ namespace MyProject.Models
 
         [Required, StringLength(60)]
         public string Title { get; set; }
-        
-        public ApplicationUser Developer { get; set; }
 
         [StringLength(250)]
         [DataType(DataType.MultilineText)]
@@ -53,5 +51,7 @@ namespace MyProject.Models
         {
             DatePosted = DateTime.Now;
         }
+
+        public ApplicationUser Developer { get; set; }
     }
 }
