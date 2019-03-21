@@ -120,10 +120,10 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
                 user.Name = Input.Name;
             }
 
-            if (Input.Image != user.Image)
-            {
-                user.Image = Input.Image;
-            }
+            //if (Input.Image != user.Image)
+            //{
+            //    user.Image = Input.Image;
+            //}
 
             if (Input.CompanyDescription != user.CompanyDescription)
             {
