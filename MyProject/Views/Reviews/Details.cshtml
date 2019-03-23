@@ -81,8 +81,8 @@
 <div>
     @if (User.IsInRole("Crowdworker"))
     {
-        <a asp-action="Edit" asp-route-id="@Model.ReviewID">Edit</a><p> | </p>
-        <a asp-action="Delete" asp-route-id="@Model.ReviewID">Delete</a><p> | </p>
+        <a asp-action="Edit" asp-route-id="@Model.ReviewID">Edit |</a>
+        <a asp-action="Delete" asp-route-id="@Model.ReviewID">Delete |</a>
         <a asp-controller="Games" asp-action="Index">Back to List</a>
     } else
     {

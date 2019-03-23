@@ -112,8 +112,53 @@
                                     <span class="sr-only">Next</span>
                                 </a>
                             </div>
-                            
                         </div>
+                    }
+                    @if (User.IsInRole("Crowdworker"))
+                    {
+                        <label asp-for="Input.MyReviews"></label>
+                        <br />
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Game</th>
+                                    <th>Overall Rating</th>
+                                    <th>Pros</th>
+                                    <th>Cons</th>
+                                    <th>Summary</th>
+                                    <th>Date Posted</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Input.MyReviews)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Game.Title)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.OverallRating)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Pros)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Cons)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Summary)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DatePosted)
+                                        </td>
+                                        <td>
+                                            <a asp-controller="Reviews" asp-action="Details" asp-route-id="@item.ReviewID">Details</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     }
                     <button type="submit" class="btn btn-default">Save</button>
                 </div>
