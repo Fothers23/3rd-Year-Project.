@@ -70,7 +70,7 @@ namespace MyProject.Controllers
                 if (_signInManager.IsSignedIn(User))
                 {
                     var user = await _userManager.GetUserAsync(User);
-                    review.user = user;
+                    review.User = user;
                 }
                 var game = await _context.Games.FirstOrDefaultAsync(x => x.GameID == review.Game.GameID);
                 review.Game = game;

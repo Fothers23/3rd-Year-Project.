@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using MyProject.Data;
 using MyProject.Models;
 
 namespace MyProject.Areas.Identity.Pages.Account.Manage
@@ -16,15 +19,18 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _context = context;
         }
 
         public string Username { get; set; }
@@ -81,6 +87,8 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
 
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
+            var myGames = await _context.Games.Where(x => x.Developer.Id == user.Id).ToListAsync();
+            var myReviews = await _context.Reviews.Where(x => x.User.Id == user.Id).ToListAsync();
 
             Username = userName;
 
@@ -92,9 +100,9 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
                 CompanyDescription = user.CompanyDescription,
                 Budget = user.Budget,
                 Spent = user.Spent,
-                MyGames = user.MyGames,
+                MyGames = myGames,
                 Rating = user.Rating,
-                MyReviews = user.MyReviews
+                MyReviews = myReviews
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);

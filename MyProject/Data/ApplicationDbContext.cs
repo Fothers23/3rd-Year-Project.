@@ -28,7 +28,7 @@ namespace MyProject.Data
 
             builder.Entity<ApplicationUser>()
                 .HasMany<Review>()
-                .WithOne(x => x.user);
+                .WithOne(x => x.User);
         }
 
         public DbSet<Game> Games { get; set; }
