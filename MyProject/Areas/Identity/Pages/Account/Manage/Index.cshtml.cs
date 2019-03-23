@@ -120,11 +120,6 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
                 user.Name = Input.Name;
             }
 
-            //if (Input.Image != user.Image)
-            //{
-            //    user.Image = Input.Image;
-            //}
-
             if (Input.CompanyDescription != user.CompanyDescription)
             {
                 user.CompanyDescription = Input.CompanyDescription;
@@ -134,6 +129,8 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             {
                 user.Budget = Input.Budget;
             }
+
+
 
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)

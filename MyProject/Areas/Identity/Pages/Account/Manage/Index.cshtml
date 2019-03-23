@@ -56,7 +56,25 @@
                         </div>
                         <div>
                             <label asp-for="Input.MyGames"></label>
-
+                            @foreach (var item in Model.Input.MyGames.)
+                            {
+                            <div class="col-md-3" style="margin-bottom:20px">
+                                <div class="thumbnail">
+                                    @if (item.Picture != null)
+                                    {
+                                        <div class="image" style="margin-bottom:20px">
+                                            <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
+                                        </div>
+                                    }
+                                    <div class="caption" style="border-top:3px solid #808080">
+                                        <h3>@item.Title</h3>
+                                        <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
+                                    </div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                            }
                         </div>
                     }
                     <button type="submit" class="btn btn-default">Save</button>
