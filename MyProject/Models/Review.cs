@@ -42,13 +42,10 @@ namespace MyProject.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DatePosted { get; set; }
 
-        public int Count = 0;
-
         // This constructor sets the current time when the review is posted.
         public Review()
         {
             DatePosted = DateTime.Now;
-            Count = Count + 1;
         }
 
         public Game Game { get; set; }

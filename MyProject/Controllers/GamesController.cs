@@ -184,7 +184,5 @@ namespace MyProject.Controllers
         {
             return _context.Games.Any(e => e.GameID == id);
         }
-
-
     }
 }
