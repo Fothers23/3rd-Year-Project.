@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyProject.Models
@@ -29,17 +31,20 @@ namespace MyProject.Models
         public string Genre { get; set; }
 
         [Display(Name = "Number of Players")]
+        [Range(1, 10)]
         public int NumberOfPlayers { get; set; }
 
-        [Display(Name = "Available Platforms")]
+        [Display(Name = "Available Platform")]
         public string AvailablePlatforms { get; set; }
 
         [Display(Name = "Reviews Required")]
+        [Range(1,100)]
         public int ReviewQuantity { get; set; }
         
         [Display(Name = "Reward for review")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        [Range(0.01,20.00)]
         public decimal ReviewReward { get; set; }
 
         [Display(Name = "Date Posted")]

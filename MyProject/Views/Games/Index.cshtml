@@ -32,7 +32,7 @@
                 {
                     <h3>@item.Title</h3>
                 }
-                <h4>@item.Developer</h4>
+                <h5>Developer: @*@item.Developer.Name*@</h5>
                 <h5>Reward: £@item.ReviewReward</h5>
                 <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
             </div>
