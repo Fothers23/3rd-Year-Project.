@@ -29,7 +29,7 @@ namespace MyProject.Controllers
             _signInManager = signInManager;
         }
 
-        public async Task<IActionResult> UploadImage(IFormFile file)
+        private async Task<IActionResult> UploadImage(IFormFile file)
         {
             if (file == null || file.Length == 0) return Content("file not selected");
             string pathRoot = _appEnvironment.WebRootPath;
@@ -68,16 +68,16 @@ namespace MyProject.Controllers
 
             return View(game);
         }
-
-        //[Authorize(Roles = "Requester")]
+        
         // GET: Games/Create
+        [Authorize(Roles = "Requester")]
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Games/Create
-        //[Authorize(Roles = "Requester")]
+        [Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Picture,Title,Developer,Description,GameLink,AgeRating," +
@@ -98,7 +98,7 @@ namespace MyProject.Controllers
         }
 
         // GET: Games/Edit/5
-        //[Authorize(Roles = "Requester")]
+        [Authorize(Roles = "Requester")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -115,7 +115,7 @@ namespace MyProject.Controllers
         }
 
         // POST: Games/Edit/5
-        //[Authorize(Roles = "Requester")]
+        [Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("GameID,Title,Developer,Description,GameLink," +
@@ -150,7 +150,7 @@ namespace MyProject.Controllers
         }
 
         // GET: Games/Delete/5
-        //[Authorize(Roles = "Requester")]
+        [Authorize(Roles = "Requester")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -169,7 +169,7 @@ namespace MyProject.Controllers
         }
 
         // POST: Games/Delete/5
-        //[Authorize(Roles = "Requester")]
+        [Authorize(Roles = "Requester")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
