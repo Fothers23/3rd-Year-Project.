@@ -18,7 +18,7 @@ namespace MyProject.Models
 
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
-        public decimal Budget { get; set; }
+        public decimal BudgetTotal { get; set; }
 
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]

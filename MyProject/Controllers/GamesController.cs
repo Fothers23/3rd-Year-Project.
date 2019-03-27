@@ -44,7 +44,7 @@ namespace MyProject.Controllers
                 return NotFound();
             }
 
-            Game game = await _context.Games
+            Game game = await _context.Games.Include(u => u.Developer)
                 .SingleOrDefaultAsync(m => m.GameID == id);
             if (game == null)
             {

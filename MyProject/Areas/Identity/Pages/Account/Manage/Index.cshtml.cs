@@ -61,8 +61,9 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Company Description")]
             public string CompanyDescription { get; set; }
 
+            [Display(Name = "Budget Total")]
             [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
-            public decimal Budget { get; set; }
+            public decimal BudgetTotal { get; set; }
 
             [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
             public decimal Spent { get; set; }
@@ -89,7 +90,11 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             var email = await _userManager.GetEmailAsync(user);
             var myGames = await _context.Games.Where(x => x.Developer.Id == user.Id).ToListAsync();
             var myReviews = await _context.Reviews.Where(x => x.User.Id == user.Id).Include(r => r.Game).ToListAsync();
-            var budget = user.Budget - user.Spent;
+            foreach (var item in myGames)
+            {
+                user.BudgetTotal += item.Budget;
+                user.Spent = item.ReviewReward * _context.Reviews.Where(x => x.Game.Developer.Id == user.Id).Count();
+            }
 
             Username = userName;
 
@@ -99,7 +104,7 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
                 Image = user.Image,
                 Email = email,
                 CompanyDescription = user.CompanyDescription,
-                Budget = budget,
+                BudgetTotal = user.BudgetTotal,
                 Spent = user.Spent,
                 MyGames = myGames,
                 Rating = user.Rating,
@@ -133,13 +138,6 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             {
                 user.CompanyDescription = Input.CompanyDescription;
             }
-
-            if (Input.Budget != user.Budget)
-            {
-                user.Budget = Input.Budget;
-            }
-
-
 
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
@@ -179,7 +177,7 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             var callbackUrl = Url.Page(
                 "/Account/ConfirmEmail",
                 pageHandler: null,
-                values: new { userId = userId, code = code },
+                values: new { userId, code },
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,

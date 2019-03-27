@@ -19,11 +19,6 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Developer" class="control-label"></label>
-                <input asp-for="Developer" class="form-control" />
-                <span asp-validation-for="Developer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
@@ -35,12 +30,30 @@
             </div>
             <div class="form-group">
                 <label asp-for="AgeRating" class="control-label"></label>
-                <input asp-for="AgeRating" class="form-control" />
+                <select asp-for="AgeRating" class="form-control">
+                    <option value="">Select game age rating here...</option>
+                    <option value="!">Parental Guidance Recommended</option>
+                    <option value="3+">Appropriate for ages rated 3+</option>
+                    <option value="7+">Appropriate for ages rated 7+</option>
+                    <option value="12+">Appropriate for ages rated 12+</option>
+                    <option value="16+">Appropriate for ages rated 16+</option>
+                    <option value="18+">Appropriate for ages rated 18+</option>
+                </select>
                 <span asp-validation-for="AgeRating" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Genre" class="control-label"></label>
-                <input asp-for="Genre" class="form-control" />
+                <select asp-for="Genre" class="form-control">
+                    <option value="">Select game genre here...</option>
+                    <option value="Action">Action</option>
+                    <option value="Action-Adventure">Action-Adventure</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="RPG">Role-playing</option>
+                    <option value="Simulation">Simulation</option>
+                    <option value="Strategy">Strategy</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Other">Other</option>
+                </select>
                 <span asp-validation-for="Genre" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,7 +63,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="AvailablePlatforms" class="control-label"></label>
-                <input asp-for="AvailablePlatforms" class="form-control" />
+                <select asp-for="AvailablePlatforms" class="form-control">
+                    <option value="">Select available game platform here...</option>
+                    <option value="PC">PC</option>
+                    <option value="PS3">PS3</option>
+                    <option value="PS4">PS4</option>
+                    <option value="Wii">Wii</option>
+                    <option value="Wii U">Wii U</option>
+                    <option value="Switch">Nintendo Switch</option>
+                    <option value="Xbox 360">Xbox 360</option>
+                    <option value="Xbox One">Xbox One</option>
+                    <option value="Other">Other</option>
+                </select>
                 <span asp-validation-for="AvailablePlatforms" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -62,6 +86,11 @@
                 <label asp-for="ReviewReward" class="control-label"></label>
                 <input asp-for="ReviewReward" class="form-control" />
                 <span asp-validation-for="ReviewReward" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Budget" class="control-label"></label>
+                <input asp-for="Budget" class="form-control" />
+                <span asp-validation-for="Budget" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

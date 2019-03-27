@@ -47,6 +47,10 @@ namespace MyProject.Models
         [Range(0.01,20.00)]
         public decimal ReviewReward { get; set; }
 
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        public decimal Budget { get; set; }
+
         [Display(Name = "Date Posted")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DatePosted { get; set; }

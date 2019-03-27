@@ -92,6 +92,11 @@
                 <span asp-validation-for="ReviewReward" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Budget" class="control-label"></label>
+                <input asp-for="Budget" placeholder="Enter your game's budget here..." class="form-control" />
+                <span asp-validation-for="Budget" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
