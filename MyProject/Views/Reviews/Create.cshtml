@@ -14,6 +14,15 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Game.GameID" />
             <input type="hidden" asp-for="Game.Title" />
+            <input type="hidden" asp-for="Game.Description" />
+            <input type="hidden" asp-for="Game.GameLink" />
+            <input type="hidden" asp-for="Game.AgeRating" />
+            <input type="hidden" asp-for="Game.Genre" />
+            <input type="hidden" asp-for="Game.NumberOfPlayers" />
+            <input type="hidden" asp-for="Game.AvailablePlatforms" />
+            <input type="hidden" asp-for="Game.ReviewQuantity" />
+            <input type="hidden" asp-for="Game.ReviewReward" />
+            <input type="hidden" asp-for="Game.Developer" />
             <div class="form-group">
                 <label asp-for="GraphicQuality" class="control-label"></label>
                 <span class="text-primary">
@@ -23,7 +32,7 @@
                     <i class="ratingStar far fa-star" data-value="4"></i>
                     <i class="ratingStar far fa-star" data-value="5"></i>
                 </span>
-                <input type="hidden" name="GraphicQuality" id="ratingsValue1" />
+                <input type="hidden" name="GraphicQuality" id="ratingsValue" />
             </div>
             <div class="form-group">
                 <label asp-for="Playability" class="control-label"></label>

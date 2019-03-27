@@ -75,7 +75,6 @@ namespace MyProject.Controllers
                 var game = await _context.Games.FirstOrDefaultAsync(x => x.GameID == review.Game.GameID);
                 review.Game = game;
                 review.OverallRating = CalculateOverallRating(review);
-                //review.Game.Developer.Spent = review.Game.Developer.Budget - review.Game.ReviewReward;
 
                 _context.Add(review);
                 await _context.SaveChangesAsync();
