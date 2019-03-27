@@ -25,14 +25,12 @@ namespace MyProject.Controllers
         }
 
         // GET: Reviews
-        [Authorize(Roles = "Crowdworker, Requester")]
         public async Task<IActionResult> Index(int id)
         {
             return View(await _context.Reviews.Where(x => x.Game.GameID == id).ToListAsync());
         }
 
         // GET: Reviews/Details/5
-        //[Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

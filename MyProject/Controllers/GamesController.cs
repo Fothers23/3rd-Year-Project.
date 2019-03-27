@@ -32,7 +32,8 @@ namespace MyProject.Controllers
         // GET: Games
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Games.ToListAsync());
+            var games = _context.Games.Include(x => x.Developer);
+            return View(games.ToList());
         }
 
         // GET: Games/Details/5

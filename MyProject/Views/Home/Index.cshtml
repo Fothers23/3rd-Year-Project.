@@ -1,6 +1,10 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+
+@{
     ViewData["Title"] = "Index";
 }
+
+@inject SignInManager<ApplicationUser> SignInManager
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
@@ -9,31 +13,42 @@
     <div class="carousel-inner" role="listbox">
         <div class="item active">
             <img src="~/images/Logo.jpg" alt="Logo" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <a class="btn btn-default" href="/Identity/Account/Login">
-                    Login
-                </a>
-            </div>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <div class="carousel-caption" role="option">
+                    <p>
+                        <a class="btn btn-default" href="/Identity/Account/Login">
+                            Login
+                        </a>
+                    </p>                    
+                </div>
+            }
         </div>
         <div class="item">
             <img src="~/images/register.jpg" alt="RegisterDeveloper" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    <a class="btn btn-default" href="/Identity/Account/Register">
-                        Register
-                    </a>
-                </p>
-            </div>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <div class="carousel-caption" role="option">
+                    <p>
+                        <a class="btn btn-default" href="/Identity/Account/Register">
+                            Register
+                        </a>
+                    </p>
+                </div>
+            }
         </div>
         <div class="item">
             <img src="~/images/reviewer.jpg" alt="RegisterReviewer" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    <a class="btn btn-default" href="/Identity/Account/Register">
-                        Register
-                    </a>
-                </p>
-            </div>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <div class="carousel-caption" role="option">
+                    <p>
+                        <a class="btn btn-default" href="/Identity/Account/Register">
+                            Register
+                        </a>
+                    </p>
+                </div>
+            }
         </div>
     </div>
     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">

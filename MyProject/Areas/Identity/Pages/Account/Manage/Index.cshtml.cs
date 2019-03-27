@@ -88,8 +88,7 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var myGames = await _context.Games.Where(x => x.Developer.Id == user.Id).ToListAsync();
-            var myReviews = await _context.Reviews.Where(x => x.User.Id == user.Id).ToListAsync();
-            //var spent = _context.Reviews.Where(x => x.Game.GameID == x.ReviewID).Count() * user.MyGames.Count();
+            var myReviews = await _context.Reviews.Where(x => x.User.Id == user.Id).Include(r => r.Game).ToListAsync();
             var budget = user.Budget - user.Spent;
 
             Username = userName;
