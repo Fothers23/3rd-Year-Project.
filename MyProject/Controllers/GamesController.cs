@@ -29,22 +29,6 @@ namespace MyProject.Controllers
             _signInManager = signInManager;
         }
 
-        private async Task<IActionResult> UploadImage(IFormFile file)
-        {
-            if (file == null || file.Length == 0) return Content("file not selected");
-            string pathRoot = _appEnvironment.WebRootPath;
-            string pathToImages = pathRoot + "\\images\\" + file.FileName;
-            string image = file.FileName;
-
-            using (var stream = new FileStream(pathToImages, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            ViewData["Image"] = image;
-            return View("Create");
-        }
-
         // GET: Games
         public async Task<IActionResult> Index()
         {
@@ -81,8 +65,20 @@ namespace MyProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Picture,Title,Developer,Description,GameLink,AgeRating," +
-            "Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward,DatePosted")] Game game)
+            "Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward,DatePosted")] IFormFile file, Game game)
         {
+            if (file == null || file.Length == 0) return Content("file not selected");
+            string pathRoot = _appEnvironment.WebRootPath;
+            string pathToImages = pathRoot + "\\images\\" + file.FileName;
+            string image = file.FileName;
+
+            using (var stream = new FileStream(pathToImages, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            ViewData["Image"] = image;
+
             if (ModelState.IsValid)
             {
                 if (_signInManager.IsSignedIn(User))
@@ -90,6 +86,7 @@ namespace MyProject.Controllers
                     var user = await _userManager.GetUserAsync(User);
                     game.Developer = user;
                 }
+                game.Picture = image;
                 _context.Add(game);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

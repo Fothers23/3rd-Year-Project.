@@ -10,17 +10,12 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="UploadImage" method="post" enctype="multipart/form-data">
-            <input asp-for="Picture" type="file" name="file" />
-            <br />
-            <input type="submit" value="Upload Image" class="btn btn-default" />
-        </form>
-        <br />
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Picture"></label>
-                <input asp-for="Picture" placeholder="Enter image filename here..." value="@ViewData["Image"]" class="form-control" />
+                <input asp-for="Picture" value="@ViewData["Image"]" type="file" name="file" />
+                <span asp-validation-for="Picture" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
