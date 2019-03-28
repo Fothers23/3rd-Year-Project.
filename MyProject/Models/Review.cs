@@ -42,6 +42,9 @@ namespace MyProject.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DatePosted { get; set; }
 
+        [Display(Name = "Rate My Review")]
+        public double ReviewRating { get; set; }
+
         // This constructor sets the current time when the review is posted.
         public Review()
         {

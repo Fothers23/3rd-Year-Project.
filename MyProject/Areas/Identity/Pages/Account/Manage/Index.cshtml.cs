@@ -72,6 +72,7 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             public List<Game> MyGames { get; set; }
 
             //Crowdworker
+            [Display(Name = "My Rating")]
             public double Rating { get; set; }
 
             [Display(Name = "My Reviews")]
@@ -90,6 +91,10 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             var email = await _userManager.GetEmailAsync(user);
             var myGames = await _context.Games.Where(x => x.Developer.Id == user.Id).ToListAsync();
             var myReviews = await _context.Reviews.Where(x => x.User.Id == user.Id).Include(r => r.Game).ToListAsync();
+            foreach (var item in myReviews)
+            {
+                user.Rating += item.ReviewRating / myReviews.Count();
+            }
             foreach (var item in myGames)
             {
                 user.BudgetTotal += item.Budget;

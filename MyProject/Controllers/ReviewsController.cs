@@ -48,6 +48,35 @@ namespace MyProject.Controllers
             return View(review);
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Requester")]
+        public async Task<IActionResult> Details([Bind("ReviewRating")] int id)
+        {
+            var review = await _context.Reviews
+                .FirstOrDefaultAsync(m => m.ReviewID == id);
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(review);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ReviewExists(review.ReviewID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            return View(review);
+        }
+
         // GET: Reviews/Create
         [Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> Create(int gameId)

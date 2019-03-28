@@ -18,6 +18,18 @@
                     </div>
                 </div>
             }
+
+            @if (User.IsInRole("Crowdworker"))
+            {
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Input.Rating)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Input.Rating)
+                    </dd>
+                </dl>
+            }
                 <div class="form-group">
                     <label asp-for="Username"></label>
                     <input asp-for="Username" class="form-control" disabled />

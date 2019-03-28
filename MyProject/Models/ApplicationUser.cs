@@ -28,6 +28,7 @@ namespace MyProject.Models
         public List<Game> MyGames { get; set; }
 
         // Crowdworker
+        [Display(Name = "My Rating")]
         public double Rating { get; set; }
 
         [Display(Name = "My Reviews")]
