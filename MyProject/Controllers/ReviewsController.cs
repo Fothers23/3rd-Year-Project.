@@ -48,35 +48,6 @@ namespace MyProject.Controllers
             return View(review);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Requester")]
-        public async Task<IActionResult> Details([Bind("ReviewRating")] int id)
-        {
-            var review = await _context.Reviews
-                .FirstOrDefaultAsync(m => m.ReviewID == id);
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(review);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReviewExists(review.ReviewID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-            }
-            return View(review);
-        }
-
         // GET: Reviews/Create
         [Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> Create(int gameId)
@@ -206,6 +177,60 @@ namespace MyProject.Controllers
             return (viewModel.GraphicQuality + viewModel.Playability
                     + viewModel.StoryCharacterDevelopment + viewModel.GameplayControls
                     + viewModel.Multiplayer) / 5.0;
+        }
+
+        [Authorize(Roles = "Requester")]
+        public async Task<IActionResult> Rate(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var review = await _context.Reviews.FindAsync(id);
+            if (review == null)
+            {
+                return NotFound();
+            }
+            return View(review);
+        }
+
+        // POST: Reviews/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Requester")]
+        public async Task<IActionResult> Rate(int id, [Bind("ReviewID,GameID,GraphicQuality,Playability," +
+            "StoryCharacterDevelopment,GameplayControls,Multiplayer,OverallRating,Pros,Cons,WrittenReview," +
+            "Summary,ReviewRating,DatePosted")] Review review)
+        {
+            if (id != review.ReviewID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    review.OverallRating = CalculateOverallRating(review);
+
+                    _context.Update(review);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ReviewExists(review.ReviewID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Details), new { id = review.ReviewID });
+            }
+            return View(review);
         }
     }
 }
