@@ -228,7 +228,7 @@ namespace MyProject.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Details), new { id = review.ReviewID });
+                return RedirectToAction(nameof(Details), new { id = review.ReviewID});
             }
             return View(review);
         }

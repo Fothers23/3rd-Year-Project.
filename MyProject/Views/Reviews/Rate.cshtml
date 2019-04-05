@@ -13,6 +13,17 @@
         <form asp-action="Rate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ReviewID" />
+            <input type="hidden" asp-for="GraphicQuality" />
+            <input type="hidden" asp-for="Playability" />
+            <input type="hidden" asp-for="StoryCharacterDevelopment" />
+            <input type="hidden" asp-for="GameplayControls" />
+            <input type="hidden" asp-for="Multiplayer" />
+            <input type="hidden" asp-for="Pros" />
+            <input type="hidden" asp-for="Cons" />
+            <input type="hidden" asp-for="WrittenReview" />
+            <input type="hidden" asp-for="Summary" />
+            <input type="hidden" asp-for="DatePosted" />
+            <input type="hidden" asp-for="Game.GameID" />
             <div class="form-group">
                 <label asp-for="ReviewRating" class="control-label"></label>
                 <span class="text-primary">
