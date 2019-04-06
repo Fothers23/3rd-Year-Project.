@@ -15,7 +15,7 @@ namespace MyProject.Models
         [Required, StringLength(60)]
         public string Title { get; set; }
 
-        [StringLength(250)]
+        [StringLength(500)]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 

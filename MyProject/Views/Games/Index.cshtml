@@ -7,6 +7,7 @@
 }
 
 <h2>Available Games for Review</h2>
+<hr />
 
 @if (User.IsInRole("Requester"))
 {
@@ -15,33 +16,35 @@
     </p>
 }
 
-@foreach (var item in Model)
-{
-    @if (!(item.ReviewQuantity == _context.Reviews.Where(x => x.Game.GameID == item.GameID).Count()))
-    {
-        <div class="col-md-3" style="margin-bottom:20px">
-            <div class="thumbnail">
-                @if (item.Picture != null)
-                {
-                    <div class="image" style="margin-bottom:20px">
-                        <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
+<div class="container-fluid">
+        @foreach (var item in Model)
+        {
+            @if (!(item.ReviewQuantity == _context.Reviews.Where(x => x.Game.GameID == item.GameID).Count()))
+            {
+                <div class="col-md-3" style="margin-bottom:20px">
+                    <div class="thumbnail">
+                        @if (item.Picture != null)
+                        {
+                            <div class="image" style="margin-bottom:20px">
+                                <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
+                            </div>
+                        }
+                        <div class="caption" style="border-top:3px solid #808080">
+                            @if (User.IsInRole("Crowdworker"))
+                            {
+                                <h3><a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@item.GameID">@item.Title</a></h3>
+                            }
+                            else
+                            {
+                                <h3>@item.Title</h3>
+                            }
+                            <h5>Developer: @item.Developer.Name</h5>
+                            <h5>Reward: £@item.ReviewReward</h5>
+                            <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
+                        </div>
                     </div>
-                }
-                <div class="caption" style="border-top:3px solid #808080">
-                    @if (User.IsInRole("Crowdworker"))
-                    {
-                        <h3><a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@item.GameID">@item.Title</a></h3>
-                    }
-                    else
-                    {
-                        <h3>@item.Title</h3>
-                    }
-                    <h5>Developer: @item.Developer.Name</h5>
-                    <h5>Reward: £@item.ReviewReward</h5>
-                    <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
                 </div>
-            </div>
-        </div>
-    }
+            }
 
-}
+        }
+</div>

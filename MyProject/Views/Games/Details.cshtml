@@ -11,20 +11,25 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Developer.Name)
+            @Html.DisplayNameFor(model => model.Developer)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Developer.Name)
         </dd>
+        @if (Model.Description != null)
+        {
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
+        }
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
+        @if (Model.GameLink != null) {
         <dt>
             @Html.DisplayNameFor(model => model.GameLink)
         </dt>
+        }
         <dd>
             @Html.DisplayFor(model => model.GameLink)
         </dd>

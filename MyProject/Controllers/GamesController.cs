@@ -68,7 +68,7 @@ namespace MyProject.Controllers
         public async Task<IActionResult> Create([Bind("Picture,Title,Developer,Description,GameLink,AgeRating," +
             "Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward,DatePosted")] IFormFile file, Game game)
         {
-            if (file == null || file.Length == 0) return Content("file not selected");
+            //if (file == null || file.Length == 0) return Content("file not selected");
             string pathRoot = _appEnvironment.WebRootPath;
             string pathToImages = pathRoot + "\\images\\" + file.FileName;
             string image = file.FileName;
