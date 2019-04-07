@@ -52,13 +52,7 @@ namespace MyProject.Models
         [Display(Name = "Date Posted")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DatePosted { get; set; }
-
-        //// This constructor sets the current time when the Game is posted.
-        //public Game()
-        //{
-        //    DatePosted = DateTime.Now;
-        //}
-
+        
         public ApplicationUser Developer { get; set; }
     }
 }

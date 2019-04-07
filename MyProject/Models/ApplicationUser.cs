@@ -33,5 +33,10 @@ namespace MyProject.Models
 
         [Display(Name = "My Reviews")]
         public List<Review> MyReviews { get; set; }
+
+        public ApplicationUser()
+        {
+            Image = "avatar.png";
+        }
     }
 }

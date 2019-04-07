@@ -46,10 +46,10 @@ namespace MyProject.Models
         public double ReviewRating { get; set; }
 
         // This constructor sets the current time when the review is posted.
-        public Review()
-        {
-            DatePosted = DateTime.Now;
-        }
+        //public Review()
+        //{
+        //    DatePosted = DateTime.Now;
+        //}
 
         public Game Game { get; set; }
 
