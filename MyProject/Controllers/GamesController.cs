@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyProject.Data;
 using MyProject.Models;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -68,7 +69,7 @@ namespace MyProject.Controllers
         public async Task<IActionResult> Create([Bind("Picture,Title,Developer,Description,GameLink,AgeRating," +
             "Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward,DatePosted")] IFormFile file, Game game)
         {
-            //if (file == null || file.Length == 0) return Content("file not selected");
+            if (file == null || file.Length == 0) return Content("Image file not selected");
             string pathRoot = _appEnvironment.WebRootPath;
             string pathToImages = pathRoot + "\\images\\" + file.FileName;
             string image = file.FileName;
@@ -87,6 +88,7 @@ namespace MyProject.Controllers
                     var user = await _userManager.GetUserAsync(User);
                     game.Developer = user;
                 }
+                game.DatePosted = DateTime.Now;
                 game.Picture = image;
                 _context.Add(game);
                 await _context.SaveChangesAsync();
@@ -116,8 +118,8 @@ namespace MyProject.Controllers
         [Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GameID,Title,Developer,Description,GameLink," +
-            "AgeRating,Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward")] Game game)
+        public async Task<IActionResult> Edit(int id, [Bind("GameID,Picture,Title,Developer,Description,GameLink," +
+            "AgeRating,Genre,NumberOfPlayers,AvailablePlatforms,ReviewQuantity,ReviewReward,Budget,DatePosted")] Game game)
         {
             if (id != game.GameID)
             {
@@ -128,6 +130,7 @@ namespace MyProject.Controllers
             {
                 try
                 {
+
                     _context.Update(game);
                     await _context.SaveChangesAsync();
                 }

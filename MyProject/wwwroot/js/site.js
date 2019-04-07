@@ -8,6 +8,27 @@ $(function () {
     //    $(this).addClass("fas").removeClass("far");
     //    $(this).prevAll(".ratingStar2").addClass("fas").removeClass("far");
     //});
+    //$(".ratingStar").contents(function () {
+    //    if ($('#ratingsValue').val(starValue) <= 1.5) {
+    //        $(".ratingStar").addClass("fas").removeClass("far");
+    //    }
+    //    else if ($('#ratingsValue').val(starValue) >= 1.6) {
+    //        $(".ratingStar").addClass("fas").removeClass("far");
+    //        $(this).prevAll(".ratingStar").addClass("fas").removeClass("far");
+    //    }
+    //    else if ($('#ratingsValue').val(starValue) >= 2.6) {
+    //        $(".ratingStar").addClass("fas").removeClass("far");
+    //        $(this).prevAll(".ratingStar").addClass("fas").removeClass("far");
+    //    }
+    //    else if ($('#ratingsValue').val(starValue) >= 3.6) {
+    //        $(".ratingStar").addClass("fas").removeClass("far");
+    //        $(this).prevAll(".ratingStar").addClass("fas").removeClass("far");
+    //    }
+    //    else if ($('#ratingsValue').val(starValue) >= 4.6) {
+    //        $(".ratingStar").addClass("fas").removeClass("far");
+    //        $(this).prevAll(".ratingStar").addClass("fas").removeClass("far");
+    //    }
+    //});
 
     $(".ratingStar").click(function () {
         $(".ratingStar").addClass("far").removeClass("fas");

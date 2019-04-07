@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyProject.Models
@@ -55,11 +53,11 @@ namespace MyProject.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DatePosted { get; set; }
 
-        // This constructor sets the current time when the Game is posted.
-        public Game()
-        {
-            DatePosted = DateTime.Now;
-        }
+        //// This constructor sets the current time when the Game is posted.
+        //public Game()
+        //{
+        //    DatePosted = DateTime.Now;
+        //}
 
         public ApplicationUser Developer { get; set; }
     }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyProject.Data;
 using MyProject.Models;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -73,6 +74,7 @@ namespace MyProject.Controllers
                 var game = await _context.Games.FirstOrDefaultAsync(x => x.GameID == review.Game.GameID);
                 review.Game = game;
                 review.OverallRating = CalculateOverallRating(review);
+                review.DatePosted = DateTime.Now;
 
                 _context.Add(review);
                 await _context.SaveChangesAsync();
@@ -131,7 +133,7 @@ namespace MyProject.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index), new { id = review.Game.GameID });
+                return RedirectToAction(nameof(Details), new { id = review.ReviewID });
             }
             return View(review);
         }
@@ -212,8 +214,6 @@ namespace MyProject.Controllers
             {
                 try
                 {
-                    review.OverallRating = CalculateOverallRating(review);
-
                     _context.Update(review);
                     await _context.SaveChangesAsync();
                 }

@@ -88,7 +88,7 @@ namespace MyProject.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(IFormFile file, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            if (file == null || file.Length == 0) return Content("file not selected");
+            if (file == null || file.Length == 0) return Content("Image file not selected");
             string pathRoot = _appEnvironment.WebRootPath;
             string pathToImages = pathRoot + "\\images\\" + file.FileName;
             string image = file.FileName;
