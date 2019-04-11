@@ -104,7 +104,7 @@ namespace MyProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Crowdworker")]
-        public async Task<IActionResult> Edit(int id, [Bind("GameID,GraphicQuality,Playability,StoryCharacterDevelopment," +
+        public async Task<IActionResult> Edit(int id, [Bind("ReviewID,GameID,GraphicQuality,Playability,StoryCharacterDevelopment," +
             "GameplayControls,Multiplayer,OverallRating,Pros,Cons,WrittenReview," +
             "Summary,DatePosted")] Review review)
         {
