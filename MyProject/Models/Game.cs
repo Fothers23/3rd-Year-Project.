@@ -5,12 +5,14 @@ namespace MyProject.Models
 {
     public class Game
     {
-        [Key, ScaffoldColumn(false)]
+        [Key]
+        [ScaffoldColumn(false)]
         public int GameID { get; set; }
 
         public string Picture { get; set; }
 
-        [Required, StringLength(60)]
+        [Required]
+        [StringLength(60)]
         public string Title { get; set; }
 
         [StringLength(500)]

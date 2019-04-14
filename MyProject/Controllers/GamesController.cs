@@ -33,8 +33,8 @@ namespace MyProject.Controllers
         // GET: Games
         public async Task<IActionResult> Index()
         {
-            var games = _context.Games.Include(x => x.Developer);
-            return View(games.ToList());
+            var games = _context.Games.Include(x => x.Developer).ToList();
+            return View(games);
         }
 
         // GET: Games/Details/5

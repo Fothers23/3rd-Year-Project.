@@ -76,6 +76,15 @@
         <dd>
             @Html.DisplayFor(model => model.DatePosted)
         </dd>
+        @if (User.IsInRole("Requester"))
+        {
+            <dt>
+                Reviewed By
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.User.Name)
+            </dd>
+        }
     </dl>
 </div>
 

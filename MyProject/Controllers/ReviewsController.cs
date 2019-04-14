@@ -39,7 +39,7 @@ namespace MyProject.Controllers
                 return NotFound();
             }
 
-            var review = await _context.Reviews
+            var review = await _context.Reviews.Include(u => u.User)
                 .FirstOrDefaultAsync(m => m.ReviewID == id);
             if (review == null)
             {
