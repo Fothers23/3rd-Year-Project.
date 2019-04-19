@@ -7,14 +7,19 @@
 }
 
 <h2>Available Games for Review</h2>
-<hr />
 
 @if (User.IsInRole("Requester"))
 {
-    <p>
+    <h4>
         <a asp-action="Create">Submit a New Game</a>
-    </p>
+    </h4>
 }
+else
+{
+    <h4>Browse the Games below and select one to review.</h4>
+}
+
+<hr />
 
 <div class="container-fluid">
     @foreach (var item in Model)

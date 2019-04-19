@@ -28,7 +28,8 @@ namespace MyProject.Data
 
             builder.Entity<ApplicationUser>()
                 .HasMany<Review>()
-                .WithOne(x => x.User);
+                .WithOne(x => x.User)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<Game> Games { get; set; }
