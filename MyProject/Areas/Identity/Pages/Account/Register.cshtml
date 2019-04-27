@@ -12,6 +12,7 @@
             <h4>Create a new account.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
+            <label asp-for="Input.Image"></label>
             <input asp-for="Input.Image" value="@ViewData["Image"]" type="file" name="file" />
             <br />
             <div class="form-group">

@@ -9,6 +9,7 @@ namespace MyProject.Models
         [ScaffoldColumn(false)]
         public int GameID { get; set; }
 
+        [Display(Name = "Game Logo/Cover")]
         public string Picture { get; set; }
 
         [Required]

@@ -25,6 +25,7 @@
             <input type="hidden" asp-for="Game.Developer" />
             <div class="form-group">
                 <label asp-for="GraphicQuality" class="control-label"></label>
+                <p>The standard of displaying and manipulating visual elements.</p>
                 <span class="text-primary">
                     <i class="ratingStar far fa-star" data-value="1"></i>
                     <i class="ratingStar far fa-star" data-value="2"></i>
@@ -36,6 +37,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Playability" class="control-label"></label>
+                <p>How easy and enjoyable @Model.Game.Title is to play.</p>
                 <span class="text-primary">
                     <i class="ratingStar2 far fa-star" data-value="1"></i>
                     <i class="ratingStar2 far fa-star" data-value="2"></i>
@@ -47,6 +49,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="StoryCharacterDevelopment" class="control-label"></label>
+                <p>The quality of storytelling within a game.</p>
                 <span class="text-primary">
                     <i class="ratingStar3 far fa-star" data-value="1"></i>
                     <i class="ratingStar3 far fa-star" data-value="2"></i>
@@ -58,6 +61,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="GameplayControls" class="control-label"></label>
+                <p>The way in which players interact with a game.</p>
                 <span class="text-primary">
                     <i class="ratingStar4 far fa-star" data-value="1"></i>
                     <i class="ratingStar4 far fa-star" data-value="2"></i>
@@ -69,6 +73,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Multiplayer" class="control-label"></label>
+                <p>The quality of either co-op or MMO modes of a game. 
+                Select 1 star if these modes are not applicable.</p>
                 <span class="text-primary">
                     <i class="ratingStar5 far fa-star" data-value="1"></i>
                     <i class="ratingStar5 far fa-star" data-value="2"></i>

@@ -54,6 +54,7 @@ namespace MyProject.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Display(Name = "Profile Picture")]
             public string Image { get; set; }
 
             [Required]
@@ -65,7 +66,7 @@ namespace MyProject.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Display(Name = "Developer?")]
+            [Display(Name = "Tick box if you are a developer")]
             public Boolean IsDeveloper { get; set; }
 
             [Required]
