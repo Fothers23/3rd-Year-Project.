@@ -11,7 +11,7 @@ namespace MyProject.Data
         {
         }
 
-        // This allows the Games and Reviews to link correctly.
+        // This allows the Games, Reviews and ApplicationUsers to link correctly.
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

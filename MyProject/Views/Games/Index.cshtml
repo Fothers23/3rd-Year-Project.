@@ -34,19 +34,12 @@ else
                             <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
                         </div>
                     }
-                    <div class="caption" style="border-top:3px solid #808080">
-                        @if (User.IsInRole("Crowdworker"))
-                        {
-                            <h3><a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@item.GameID">@item.Title</a></h3>
-                        }
-                        else
-                        {
+                        <div class="caption" style="border-top:3px solid #808080">
                             <h3>@item.Title</h3>
-                        }
-                        <h5>Developer: @item.Developer.Name</h5>
-                        <h5>Reward: £@item.ReviewReward</h5>
-                        <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
-                    </div>
+                            <h5>Developer: @item.Developer.Name</h5>
+                            <h5>Reward: £@item.ReviewReward</h5>
+                            <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
+                        </div>
                 </div>
             </div>
         }

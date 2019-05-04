@@ -12,15 +12,14 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             @if (Model.Input.Image != null)
             {
-                <div class="thumbnail">
-                    <div class="image" style="margin-bottom:20px">
-                        <img class="img-responsive" src="~/images/@Model.Input.Image" height="150" width="150" />
-                    </div>
+                <div class="col-md-offset-3">
+                    <img class="img-responsive" src="~/images/@Model.Input.Image" height="150" width="150" />
                 </div>
             }
 
             @if (User.IsInRole("Crowdworker"))
             {
+                <br />
                 <dl class="dl-horizontal">
                     <dt>
                         @Html.DisplayNameFor(model => model.Input.Rating)
@@ -69,31 +68,35 @@
                             <label asp-for="Input.Spent"></label>
                             <input asp-for="Input.Spent" class="form-control" disabled />
                         </div>
-                        <div>
+                        <button type="submit" class="btn btn-default">Save</button>
+                        <hr />
+                        <div class="container-fluid">
                             <label asp-for="Input.MyGames"></label>
                             <br />
                             @foreach (var item in Model.Input.MyGames)
                             {
-                                <div class="col-md-3" style="margin-bottom:20px">
-                                <div class="thumbnail">
-                               @if (item.Picture != null)
-                               {
-                                    <div class="image" style="margin-bottom:20px">
-                                        <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
+                                <div class="col-md-5" style="margin-bottom:20px">
+                                    <div class="thumbnail">
+                                        @if (item.Picture != null)
+                                        {
+                                            <div class="image" style="margin-bottom:20px">
+                                                <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
+                                            </div>
+                                        }
+                                        <div class="caption" style="border-top:3px solid #808080">
+                                            <h6>@item.Title</h6>
+                                            <a asp-controller="Games" asp-action="Details" asp-route-id="@item.GameID">Details</a>
+                                        </div>
                                     </div>
-                               }
-                                    <div class="caption" style="border-top:3px solid #808080">
-                                        <h6>@item.Title</h6>
-                                        <a asp-controller="Games" asp-action="Details" asp-route-id="@item.GameID">Details</a>
-                                    </div>
+                                    <br />
                                 </div>
-                             <br />
-                        </div>
                             }
-                     </div>
+                        </div>
                     }
                     @if (User.IsInRole("Crowdworker"))
                     {
+                        <button type="submit" class="btn btn-default">Save</button>
+                        <hr />
                         <label asp-for="Input.MyReviews"></label>
                         <br />
                         <table class="table">
@@ -138,8 +141,6 @@
                             </tbody>
                         </table>
                     }
-                    <br />
-                    <button type="submit" class="btn btn-default" >Save</button>
                 </div>
         </form>
         </div>

@@ -42,12 +42,13 @@ namespace MyProject.Models
         [Range(1,100)]
         public int ReviewQuantity { get; set; }
         
-        [Display(Name = "Reward for review")]
+        [Display(Name = "Reward for review (£)")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
         [Range(0.01,20.00)]
         public decimal ReviewReward { get; set; }
 
+        [Display(Name = "Budget (£)")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
         public decimal Budget { get; set; }

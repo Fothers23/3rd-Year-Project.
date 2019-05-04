@@ -148,6 +148,7 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             if (Input.Email != email)
             {
                 var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
+                user.UserName = Input.Email;
                 if (!setEmailResult.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);

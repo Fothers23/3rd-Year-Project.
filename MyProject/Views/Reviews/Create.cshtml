@@ -7,9 +7,10 @@
 <h2>Review @Model.Game.Title</h2>
 
 <h4>Fill in the form below and submit for your review for @Model.Game.Title.</h4>
+<h6>See About for further information on the rating qualities.</h6>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Game.GameID" />
@@ -73,8 +74,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Multiplayer" class="control-label"></label>
-                <p>The quality of either co-op or MMO modes of a game. 
-                Select 1 star if these modes are not applicable.</p>
+                <p>
+                    The quality of either co-op or MMO modes of a game.
+                    Select 1 star if these modes are not applicable.
+                </p>
                 <span class="text-primary">
                     <i class="ratingStar5 far fa-star" data-value="1"></i>
                     <i class="ratingStar5 far fa-star" data-value="2"></i>
@@ -86,33 +89,43 @@
             </div>
             <div class="form-group">
                 <label asp-for="Pros" class="control-label"></label>
-                <input asp-for="Pros" class="form-control" />
+                <input asp-for="Pros" placeholder="Enter Pros of @Model.Game.Title here..." class="form-control" />
                 <span asp-validation-for="Pros" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cons" class="control-label"></label>
-                <input asp-for="Cons" class="form-control" />
+                <input asp-for="Cons" placeholder="Enter Cons of @Model.Game.Title here..." class="form-control" />
                 <span asp-validation-for="Cons" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="WrittenReview" class="control-label"></label>
-                <textarea asp-for="WrittenReview" class="form-control"></textarea>
+                <textarea asp-for="WrittenReview" placeholder="Write a full review of @Model.Game.Title here..." class="form-control"></textarea>
                 <span asp-validation-for="WrittenReview" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Summary" class="control-label"></label>
-                <textarea asp-for="Summary" class="form-control"></textarea>
+                <textarea asp-for="Summary" placeholder="Write a summary of your full review here..." class="form-control"></textarea>
                 <span asp-validation-for="Summary" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
+        <a asp-controller="Games" asp-action="Index">Back to List</a>
+    </div>
+
+    <div class="col-md-5 col-md-offset-1">
+        <section>
+            <style>
+                .div-block-39 {
+                    object-fit: fill
+                }
+            </style>
+            <img src="~/images/@Model.Game.Picture" alt="Logo" class="img-responsive" />
+        </section>
     </div>
 </div>
 
-<div>
-    <a asp-controller="Games" asp-action="Index">Back to List</a>
-</div>
+
 
 
