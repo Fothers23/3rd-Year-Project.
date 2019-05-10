@@ -30,7 +30,9 @@ namespace MyProject.Controllers
             _signInManager = signInManager;
         }
 
-        // GET: Games
+        /* Retrieves and creates a list of all games from the 
+         * database and returns the corresponding Index View. 
+        */
         public async Task<IActionResult> Index()
         {
             var games = _context.Games.Include(x => x.Developer).ToList();

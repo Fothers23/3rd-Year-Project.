@@ -30,15 +30,23 @@ else
                 <div class="thumbnail">
                     @if (item.Picture != null)
                     {
-                        <div class="image" style="margin-bottom:20px">
-                            <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
-                        </div>
+                        <a asp-action="Details" asp-route-id="@item.GameID">
+                            <div class="image" style="margin-bottom:20px">
+                                <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
+                            </div>
+                        </a>
+                        
                     }
                         <div class="caption" style="border-top:3px solid #808080">
                             <h3>@item.Title</h3>
                             <h5>Developer: @item.Developer.Name</h5>
                             <h5>Reward: £@item.ReviewReward</h5>
-                            <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
+                            <a asp-action="Details" asp-route-id="@item.GameID">Details</a> 
+                            @if (User.IsInRole("Crowdworker"))
+                            {
+                                <a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@item.GameID" > | Review</a> 
+                            }
+                            
                         </div>
                 </div>
             </div>

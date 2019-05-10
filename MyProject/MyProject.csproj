@@ -10,6 +10,8 @@
     <Compile Remove="Data\Migrations\20190328132828_ReviewRating.Designer.cs" />
     <Compile Remove="Data\Migrations\20190504184202_Multiline.cs" />
     <Compile Remove="Data\Migrations\20190504184202_Multiline.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190510133801_BudgetRange.cs" />
+    <Compile Remove="Data\Migrations\20190510133801_BudgetRange.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

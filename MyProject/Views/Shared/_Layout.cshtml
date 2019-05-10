@@ -36,6 +36,10 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Games" asp-action="Index">Browse</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    @if (User.IsInRole("Requester"))
+                    {
+                        <li><a asp-area="" asp-controller="Games" asp-action="Create">Submit Game</a></li>
+                    }
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
