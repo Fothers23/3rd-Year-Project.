@@ -39,7 +39,9 @@ namespace MyProject.Controllers
             return View(games);
         }
 
-        // GET: Games/Details/5
+        /* Retrieves the Details view and populates it with 
+         * Game details of the Game with the corresponding id.
+         */
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -57,14 +59,14 @@ namespace MyProject.Controllers
             return View(game);
         }
         
-        // GET: Games/Create
+        // Retrieves the Create View.
         [Authorize(Roles = "Requester")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Games/Create
+        // Deals with the input information from the Create View.
         [Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -76,6 +78,7 @@ namespace MyProject.Controllers
             string pathToImages = pathRoot + "\\images\\" + file.FileName;
             string image = file.FileName;
 
+            // Adds image to folder.
             using (var stream = new FileStream(pathToImages, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
@@ -85,21 +88,25 @@ namespace MyProject.Controllers
 
             if (ModelState.IsValid)
             {
+                // Assigns user as Developer of the Game.
                 if (_signInManager.IsSignedIn(User))
                 {
                     var user = await _userManager.GetUserAsync(User);
                     game.Developer = user;
                 }
+                // Sets the DatePosted as the current date and time.
                 game.DatePosted = DateTime.Now;
-                game.Picture = image;
-                _context.Add(game);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                game.Picture = image; // Sets Picture as the image uploaded.
+                _context.Add(game); // Adds Game to the database.
+                await _context.SaveChangesAsync(); // Saves changes to the database.
+                return RedirectToAction(nameof(Index)); // Redirects the user to Game Index upon submission.
             }
-            return View(game);
+            return View(game); // Returns the Create view if info input incorrectly.
         }
 
-        // GET: Games/Edit/5
+        /* Retrieves the Edit view and populates it with 
+         * Game details of the Game with the corresponding id.
+         */
         [Authorize(Roles = "Requester")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -116,7 +123,7 @@ namespace MyProject.Controllers
             return View(game);
         }
 
-        // POST: Games/Edit/5
+        // Deals with the input information from the Edit View.
         [Authorize(Roles = "Requester")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -132,9 +139,8 @@ namespace MyProject.Controllers
             {
                 try
                 {
-
-                    _context.Update(game);
-                    await _context.SaveChangesAsync();
+                    _context.Update(game); // Updates the database entry.
+                    await _context.SaveChangesAsync(); // Saves changes to the database.
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -147,12 +153,14 @@ namespace MyProject.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index)); // Redirects the user to Game Index upon submission.
             }
-            return View(game);
+            return View(game); // Returns the Edit view if info input incorrectly.
         }
 
-        // GET: Games/Delete/5
+        /* Retrieves the Delete view and populates it with 
+         * Game details of the Game with the corresponding id.
+         */
         [Authorize(Roles = "Requester")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -171,18 +179,19 @@ namespace MyProject.Controllers
             return View(game);
         }
 
-        // POST: Games/Delete/5
+        // Deals with the input information from the Delete view.
         [Authorize(Roles = "Requester")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var game = await _context.Games.FindAsync(id);
-            _context.Games.Remove(game);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var game = await _context.Games.FindAsync(id); // Finds the Game in the database.
+            _context.Games.Remove(game); // Deletes the Game from the database.
+            await _context.SaveChangesAsync(); // Save changes to the database.
+            return RedirectToAction(nameof(Index)); // Redirects the user to the Game Index upon submission.
         }
 
+        // Checks the id matches the id of a game in the database.
         private bool GameExists(int id)
         {
             return _context.Games.Any(e => e.GameID == id);

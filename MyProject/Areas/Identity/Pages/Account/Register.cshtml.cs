@@ -94,6 +94,7 @@ namespace MyProject.Areas.Identity.Pages.Account
             string pathToImages = pathRoot + "\\images\\" + file.FileName;
             string image = file.FileName;
 
+            // Adds image to folder.
             using (var stream = new FileStream(pathToImages, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
@@ -103,25 +104,31 @@ namespace MyProject.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                // Initializes the new user with the input attributes.
                 var user = new ApplicationUser { Image = image, Name = Input.Name,
                     UserName = Input.Email, Email = Input.Email };
+                // Creates the new user with the input password.
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     if (Input.IsDeveloper == true)
                     {
+                        // Creates Requester role if it hasn't created yet.
                         if (await _roleManager.FindByNameAsync(role1) == null)
                         {
                             await _roleManager.CreateAsync(new ApplicationRole(role1, desc1));
                         }
+                        // Assigns user the Requester role.
                         await _userManager.AddToRoleAsync(user, role1);
                     }
                     else
                     {
+                        // Creates Crowdworker role if it hasn't created yet.
                         if (await _roleManager.FindByNameAsync(role2) == null)
                         {
                             await _roleManager.CreateAsync(new ApplicationRole(role2, desc2));
                         }
+                        // Assigns user the Crowdworker role.
                         await _userManager.AddToRoleAsync(user, role2);
                     }
                     _logger.LogInformation("User created a new account with password.");
