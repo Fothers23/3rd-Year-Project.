@@ -25,13 +25,37 @@ namespace MyProject.Controllers
             _signInManager = signInManager;
         }
 
-        // GET: Reviews
-        public async Task<IActionResult> Index(int id)
+        /* Retrieves and creates a list of all reviews of the 
+         * Game matching the id from the 
+         * database and returns the corresponding Index View. 
+        */
+        public async Task<IActionResult> Index(int id, string sortOrder)
         {
-            return View(await _context.Reviews.Where(x => x.Game.GameID == id).ToListAsync());
+            ViewData["RatingSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            var reviews = from r in _context.Reviews.Where(x => x.Game.GameID == id)
+                           select r;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    reviews = reviews.OrderByDescending(r => r.OverallRating);
+                    break;
+                case "Date":
+                    reviews = reviews.OrderBy(r => r.DatePosted);
+                    break;
+                case "date_desc":
+                    reviews = reviews.OrderByDescending(r => r.DatePosted);
+                    break;
+                default:
+                    reviews = reviews.OrderBy(r => r.OverallRating);
+                    break;
+            }
+            return View(await reviews.AsNoTracking().ToListAsync());
         }
 
-        // GET: Reviews/Details/5
+        /* Retrieves the Details view and populates it with 
+         * Review details of the Review with the corresponding id.
+         */
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,7 +73,7 @@ namespace MyProject.Controllers
             return View(review);
         }
 
-        // GET: Reviews/Create
+        // Retrieves the Create View passing in the Game Id.
         [Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> Create(int gameId)
         {
@@ -57,7 +81,7 @@ namespace MyProject.Controllers
             return View(new Review { Game = game });
         }
 
-        // POST: Reviews/Create
+        // Deals with the input information from the Create View.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Crowdworker")]
@@ -68,22 +92,26 @@ namespace MyProject.Controllers
             {
                 if (_signInManager.IsSignedIn(User))
                 {
+                    // Assigns user as Reviewer of the Game.
                     var user = await _userManager.GetUserAsync(User);
                     review.User = user;
                 }
                 var game = await _context.Games.FirstOrDefaultAsync(x => x.GameID == review.Game.GameID);
-                review.Game = game;
+                review.Game = game; // Sets Game as the Game passed to the Get method.
                 review.OverallRating = CalculateOverallRating(review);
-                review.DatePosted = DateTime.Now;
+                review.DatePosted = DateTime.Now; // Sets the DatePosted as the current date and time.
 
-                _context.Add(review);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new { id = review.Game.GameID } );
+                _context.Add(review); // Adds Review to the database.
+                await _context.SaveChangesAsync(); // Saves changes to the database.
+                // Redirects the user to Review Index of the specific Game upon submission.
+                return RedirectToAction(nameof(Index), new { id = review.Game.GameID } ); 
             }
-            return View(review);
+            return View(review); // Returns the Create view if info input incorrectly.
         }
 
-        // GET: Reviews/Edit/5
+        /* Retrieves the Edit view and populates it with 
+         * Review details of the Review with the corresponding id.
+         */
         [Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -100,7 +128,7 @@ namespace MyProject.Controllers
             return View(review);
         }
 
-        // POST: Reviews/Edit/5
+        // Deals with the input information from the Edit View.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Crowdworker")]
@@ -119,8 +147,8 @@ namespace MyProject.Controllers
                 {
                     review.OverallRating = CalculateOverallRating(review);
 
-                    _context.Update(review);
-                    await _context.SaveChangesAsync();
+                    _context.Update(review); // Updates the database entry.
+                    await _context.SaveChangesAsync(); // Saves changes to the database.
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -133,12 +161,15 @@ namespace MyProject.Controllers
                         throw;
                     }
                 }
+                // Redirects the user to Review Details upon submission.
                 return RedirectToAction(nameof(Details), new { id = review.ReviewID });
             }
-            return View(review);
+            return View(review); // Returns the Edit view if info input incorrectly.
         }
 
-        // GET: Reviews/Delete/5
+        /* Retrieves the Delete view and populates it with 
+         * Review details of the Review with the corresponding id.
+         */
         [Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -157,23 +188,27 @@ namespace MyProject.Controllers
             return View(review);
         }
 
-        // POST: Reviews/Delete/5
+        // Deals with the input information from the Delete view.
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Crowdworker")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // Finds the Review in the database.
             var review = await _context.Reviews.Include(r => r.Game).FirstOrDefaultAsync(x => x.ReviewID == id);
-            _context.Reviews.Remove(review);
-            await _context.SaveChangesAsync();
+            _context.Reviews.Remove(review); // Deletes the Review from the database.
+            await _context.SaveChangesAsync(); // Save changes to the database.
+            // Redirects the user to Review Index of the specific Game upon submission.
             return RedirectToAction(nameof(Index), new { id = review.Game.GameID });
         }
 
+        // Checks the id matches the id of a Review in the database.
         private bool ReviewExists(int id)
         {
             return _context.Reviews.Any(e => e.ReviewID == id);
         }
 
+        // Calculates the average rating from the 5 input quality ratings.
         private double CalculateOverallRating(Review viewModel)
         {
             return (viewModel.GraphicQuality + viewModel.Playability
@@ -181,6 +216,7 @@ namespace MyProject.Controllers
                     + viewModel.Multiplayer) / 5.0;
         }
 
+        // Retrieves the Rate view.
         [Authorize(Roles = "Requester")]
         public async Task<IActionResult> Rate(int? id)
         {
@@ -197,7 +233,7 @@ namespace MyProject.Controllers
             return View(review);
         }
 
-        // POST: Reviews/Edit/5
+        // Deals with the input information from the Rate View.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Requester")]
@@ -214,8 +250,8 @@ namespace MyProject.Controllers
             {
                 try
                 {
-                    _context.Update(review);
-                    await _context.SaveChangesAsync();
+                    _context.Update(review); // Updates the database entry.
+                    await _context.SaveChangesAsync(); // Saves changes to the database.
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -228,9 +264,10 @@ namespace MyProject.Controllers
                         throw;
                     }
                 }
+                // Redirects the user to Review Details upon submission.
                 return RedirectToAction(nameof(Details), new { id = review.ReviewID});
             }
-            return View(review);
+            return View(review); // Returns the Rate view if info input incorrectly.
         }
     }
 }

@@ -79,6 +79,7 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             public List<Review> MyReviews { get; set; }
         }
 
+        // Retrieves and displays user info from the database.
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -89,7 +90,9 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
 
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
+            // Initializes myGames as a list of Games where the current user id matches the Game Developer id.
             var myGames = await _context.Games.Where(x => x.Developer.Id == user.Id).ToListAsync();
+            // Initializes myReviews as a list of Reviews where the current user id matches the Review user id.
             var myReviews = await _context.Reviews.Where(x => x.User.Id == user.Id).Include(r => r.Game).ToListAsync();
             foreach (var item in myReviews)
             {
@@ -121,6 +124,7 @@ namespace MyProject.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        // Updates the user info in the database if it is edited by the user.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
