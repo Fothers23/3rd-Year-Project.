@@ -17,6 +17,20 @@
 else
 {
     <h4>Browse the Games below and select one to review.</h4>
+    <br />
+    <p style="text-align:left;">
+        <form asp-action="Index" method="get">
+            <div class="form-actions no-color">
+                Find by title or developer: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                <input type="submit" value="Search" class="btn btn-default" /> |
+                <a asp-action="Index">Back to Full List</a>
+            </div>
+        </form>
+    <span style="float:right;">
+        Sort by: <a asp-action="Index" asp-route-sortOrder="@ViewData["DeveloperSortParm"]">Developer</a> |
+        <a asp-action="Index" asp-route-sortOrder="@ViewData["RewardSortParm"]">Reward</a>
+    </span>
+    </p>
 }
 
 <hr />
@@ -35,19 +49,19 @@ else
                                 <img class="img-responsive" src="~/images/@item.Picture" height="250" width="250" />
                             </div>
                         </a>
-                        
+
                     }
-                        <div class="caption" style="border-top:3px solid #808080">
-                            <h3>@item.Title</h3>
-                            <h5>Developer: @item.Developer.Name</h5>
-                            <h5>Reward: £@item.ReviewReward</h5>
-                            <a asp-action="Details" asp-route-id="@item.GameID">Details</a> 
-                            @if (User.IsInRole("Crowdworker"))
-                            {
-                                <a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@item.GameID" > | Review</a> 
-                            }
-                            
-                        </div>
+                    <div class="caption" style="border-top:3px solid #808080">
+                        <h3>@item.Title</h3>
+                        <h5>Developer: @item.Developer.Name</h5>
+                        <h5>Reward: £@item.ReviewReward</h5>
+                        <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
+                        @if (User.IsInRole("Crowdworker"))
+                        {
+                        <p> | <a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@item.GameID">Review</a></p>
+                        }
+
+                    </div>
                 </div>
             </div>
         }

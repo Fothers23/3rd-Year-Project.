@@ -33,10 +33,38 @@ namespace MyProject.Controllers
         /* Retrieves and creates a list of all games from the 
          * database and returns the corresponding Index View. 
         */
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            var games = _context.Games.Include(x => x.Developer).ToList();
-            return View(games);
+            // Retrieves action input by user.
+            ViewData["DeveloperSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["RewardSortParm"] = string.IsNullOrEmpty(sortOrder) ? "reward_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            var games = from g in _context.Games.Include(x => x.Developer)
+                          select g;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                games = games.Where(g => g.Title.Contains(searchString)
+                                       || g.Developer.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    games = games.OrderByDescending(g => g.Developer.Name);
+                    break;
+                case "Reward":
+                    games = games.OrderBy(g => g.ReviewReward);
+                    break;
+                case "reward_desc":
+                    games = games.OrderByDescending(g => g.ReviewReward);
+                    break;
+                default:
+                    games = games.OrderBy(g => g.Developer.Name);
+                    break;
+            }
+            return View(await games.AsNoTracking().ToListAsync());
         }
 
         /* Retrieves the Details view and populates it with 

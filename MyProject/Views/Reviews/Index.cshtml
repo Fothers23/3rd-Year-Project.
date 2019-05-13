@@ -6,7 +6,8 @@
 
 <h2>Completed Reviews</h2>
 <h4>Browse the Reviews below.</h4>
-
+<p align="right">Sort by: <a asp-action="Index" asp-route-sortOrder="@ViewData["RatingSortParm"]">Overall Rating</a> | 
+                          <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">Date Posted</a></p>
 <table class="table">
     <thead>
         <tr>

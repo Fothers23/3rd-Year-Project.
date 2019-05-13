@@ -107,8 +107,10 @@
     }
     else
     {
-        <a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@Model.GameID">Review |</a>
-        <a asp-action="Index">Back to List</a>
+        <p>
+            <a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@Model.GameID">Review</a> | 
+            <a asp-action="Index">Back to List</a>
+        </p>
     }
 
 
