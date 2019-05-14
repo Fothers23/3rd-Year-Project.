@@ -43,12 +43,14 @@ namespace MyProject.Controllers
             var games = from g in _context.Games.Include(x => x.Developer)
                           select g;
 
+            // Filters list based on user input matching data in the database.
             if (!String.IsNullOrEmpty(searchString))
             {
                 games = games.Where(g => g.Title.Contains(searchString)
                                        || g.Developer.Name.Contains(searchString));
             }
 
+            // Changes the list order.
             switch (sortOrder)
             {
                 case "name_desc":

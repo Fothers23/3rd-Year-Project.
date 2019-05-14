@@ -58,7 +58,7 @@ else
                         <a asp-action="Details" asp-route-id="@item.GameID">Details</a>
                         @if (User.IsInRole("Crowdworker"))
                         {
-                        <p> | <a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@item.GameID">Review</a></p>
+                        <span> | <a asp-controller="Reviews" asp-action="Create" asp-route-gameId="@item.GameID">Review</a></span>
                         }
 
                     </div>

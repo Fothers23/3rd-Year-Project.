@@ -31,10 +31,14 @@ namespace MyProject.Controllers
         */
         public async Task<IActionResult> Index(int id, string sortOrder)
         {
+            // Retrieves action input by user.
             ViewData["RatingSortParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
             var reviews = from r in _context.Reviews.Where(x => x.Game.GameID == id)
                            select r;
+
+            // Changes the list order.
             switch (sortOrder)
             {
                 case "name_desc":
